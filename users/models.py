@@ -23,8 +23,5 @@ class CompanyAdmin(models.Model):
     def __str__(self):
         return self.user + "@" + self.company
 
-# class CompanyAdmin(models.Model):
-#     user = models.ForeignKey(settings., on_delete=models.CASCADE)
-#     company = models.ForeignKey('companies.Company', on_delete=models.CASCADE)
-#     is_admin = models.BooleanField(default=False)
+
     

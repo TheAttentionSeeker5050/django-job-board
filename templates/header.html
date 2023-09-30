@@ -1,0 +1,28 @@
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/output.css' %}">
+
+<header class="p-4 border-b-2 border-slate-400 bg-indigo-200 flex flex-row justify-between text-xl">
+  <picture class="">
+    <img src="{% static 'img/logo3.png' %}" alt="Company Logo" class="">
+  </picture>
+
+  <nav class="flex flex-row justify-between items-center w-full px-8">
+    <div class="gap-4 flex flex-row">
+      <a href="/jobs" class="">Jobs</a>
+      <a href="/companies" class="">Companies</a>
+    </div>
+    <div class="gap-4 flex flex-row">
+      {% if user.is_authenticated %}
+      <a href="/profile" class="">Profile</a>
+      <a href="/logout" class="">Logout</a>
+      {% else %}
+      <a href="/login" class="">Login</a>
+      <a href="/register" class="">Register</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  </header>
+{% endblock header %}
