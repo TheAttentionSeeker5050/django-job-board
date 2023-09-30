@@ -12,10 +12,13 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# set the path for env file
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -43,6 +46,11 @@ INSTALLED_APPS = [
     'django_browser_reload',
 
     # local apps
+    'users',
+    'companies',
+    "jobs",
+    "applications",
+    "resumes",
 
 
 ]
@@ -98,7 +106,7 @@ DATABASES = {
 }
 
 # the user model as the default model
-AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'users.CustomUser'
 
 
 # Password validation
