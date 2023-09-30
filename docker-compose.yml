@@ -22,7 +22,7 @@ services:
       context: "./"
       dockerfile: "django.Dockerfile"
     restart: always
-    command: python3 manage.py runserver 0.0.0.0:8000
+    command: python3 manage.py runserver 8000
     ports:
       - "8085:8000"
     volumes:

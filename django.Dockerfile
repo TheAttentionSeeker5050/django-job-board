@@ -18,4 +18,4 @@ RUN pip install -r requirements.txt
 EXPOSE 8085
 
 # # run django server
-CMD ["python3", "manage.py", "runserver"]
+CMD ["python3", "manage.py", "runserver", "8000"]
