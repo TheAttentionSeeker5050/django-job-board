@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+  Login
+{% endblock title %}
+
+{% block content %}
+<main class="my-6 ">
+    <div class="max-w-md p-8 mx-auto border-2 border-slate-800 rounded-lg ">
+    <h1 class="text-3xl font-bold text-center text-slate-600">Login</h1>
+    
+    <!-- use the RegisterForm to log in the user -->
+    <form action="" method="POST" class="my-4 flex flex-col flex-wrap gap-2">
+        
+        {% csrf_token %}
+        
+
+        <label for="{{ form.username.id_for_label }}" class="w-1/2 ">Username:</label>
+        {{ form.username }}
+
+        <label for="{{ form.password.id_for_label }}" class="w-1/2">Password:</label>
+        {{ form.password }}
+
+        
+        <button type="submit" class="py-2 px-4 m-2 rounded-xl bg-purple-500 text-white hover:bg-purple-400">Login</button>
+    </form>
+    </div>
+</main>
+{% endblock content %}
+  
