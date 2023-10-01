@@ -12,6 +12,6 @@ urlpatterns = [
     path('login/', UserLoginView.as_view(), name='login'),
     path('register/', UserRegisterView.as_view(), name='register'),
     path('logout/', UserLogoutView.as_view(), name='logout'),
-    # path('users/', include('users.urls')),
+    path('profile/', include('users.urls')),
     path("__reload__/", include("django_browser_reload.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
