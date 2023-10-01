@@ -44,6 +44,8 @@ INSTALLED_APPS = [
 
     # third party apps
     'django_browser_reload',
+    'crispy_forms',
+    'crispy_tailwind',
 
     # local apps
     'users',
@@ -83,6 +85,10 @@ TEMPLATES = [
         },
     },
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+
+CRISPY_TEMPLATE_PACK = "tailwind"
 
 WSGI_APPLICATION = 'website.wsgi.application'
 

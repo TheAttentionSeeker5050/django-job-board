@@ -20,7 +20,7 @@ class CustomUser(AbstractUser):
 class CompanyAdmin(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     company = models.ForeignKey('companies.Company', on_delete=models.CASCADE)
-    is_admin = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=True)
 
     def __str__(self):
         return self.user + "@" + self.company

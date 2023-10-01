@@ -1,11 +1,3 @@
-# # implement login using class based views using session authentication
-# from django.contrib.auth.mixins import LoginRequiredMixin
-# from django.views.generic import ListView, CreateView
-# from django.contrib.auth import get_user_model
-# from django.urls import reverse_lazy
-# from django.contrib.auth.views import LoginView, LogoutView, CreateView
-# from .forms import UserCreateForm, UserLoginForm
-
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView

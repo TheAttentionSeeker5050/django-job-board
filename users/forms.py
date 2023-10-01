@@ -24,7 +24,7 @@ class UserLoginForm(AuthenticationForm):
             placeholder = placeholders[field]
             self.fields[field].widget.attrs['placeholder'] = placeholder
             self.fields[field].label = False
-            self.fields[field].widget.attrs['class'] = 'form-control border-2 border-slate-800 px-2 rounded-lg outline-0 focus:border-purple-700 bg-purple-50'
+            self.fields[field].widget.attrs['class'] = 'border-2 border-slate-800  rounded-lg outline-0 focus:border-purple-700 bg-purple-50 py-1 px-2'
             
     class Meta:
         model = get_user_model()
