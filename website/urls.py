@@ -14,4 +14,7 @@ urlpatterns = [
     path('logout/', UserLogoutView.as_view(), name='logout'),
     path('profile/', include('users.urls')),
     path("__reload__/", include("django_browser_reload.urls")),
+
+    # error pages
+    path('error/', TemplateView.as_view(template_name='error.html'), name='error'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
