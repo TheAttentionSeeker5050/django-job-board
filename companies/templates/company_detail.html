@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% block title %}
+Company Detail
+{% endblock %}
+
+{% block content %}
+<main class="max-w-4xl p-8 mx-auto my-6 ">
+    <a href="{{ previous_url }}" class="btn btn-primary">Go Back</a>
+    <h1>{{ company.company_name }}</h1>
+    <p>Industry: {{ company.industry }}</p>
+    <p>Location: {{ company.location }}</p>
+
+    
+    {% if is_owner %}
+    <a href="/companies/{{ company.id }}/edit">Edit</a>
+    <a href="/companies/{{ company.id }}/delete">Delete</a>
+    {% endif %}
+    
+    <h2>Job Posts</h2>
+    <ul>
+        <li><a href="">Create Job Post</a></li>
+        {% for job in jobs %}
+        <li>
+            {{ job.title }}
+            {% if is_owner %}
+            <a href="/jobs/{{ job.id }}/edit">Edit</a>
+            <a href="/jobs/{{ job.id }}/delete">Delete</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</main>
+{% endblock %}
