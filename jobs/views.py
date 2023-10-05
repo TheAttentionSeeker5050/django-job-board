@@ -27,11 +27,17 @@ class JobDetailView(DetailView):
     model = Job
     template_name = 'job_detail.html'
     context_object_name = 'job'
-    
+
     def get_queryset(self):
         # filter by url param id=job.id
-        return Job.objects.filter(id=self.kwargs['id'])
-
+        return Job.objects.filter(id=self.kwargs.get('pk'))
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["job"] = Job.objects.get(id=self.kwargs.get('pk'))
+        context['is_owner'] = self.request.user == self.get_object().company.owner
+        context['previous_url'] = self.request.META.get('HTTP_REFERER', '/')
+        return context
 
 # create job view
 class JobCreateView(CreateView):
@@ -44,6 +50,10 @@ class JobCreateView(CreateView):
         # add the company on the url to the form
         form.instance.company = Company.objects.get(id=self.kwargs['company_pk'])
         return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        return super().form_invalid(form)
+    
     
     # get success url
     def get_success_url(self):
@@ -77,8 +87,8 @@ class JobUpdateView(UpdateView):
 class JobDeleteView(DeleteView):
     model = Job
     template_name = 'job_delete.html'
-    success_url = reverse_lazy('list_jobs')
+    success_url = reverse_lazy('my_organizations')
     
     def get_queryset(self):
         # filter by url param id=job.id
-        return Job.objects.filter(id=self.kwargs['id'])
+        return Job.objects.filter(id=self.kwargs['pk'])

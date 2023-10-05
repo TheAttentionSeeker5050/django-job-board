@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+
+{% block title %}
+Delete Job
+{% endblock %}
+
+{% block content %}
+<main class="max-w-lg p-8 mx-auto my-6 ">
+    <h1 class="text-2xl font-bold my-6 text-slate-600">Are you sure you want to delete {{ job.title }}?</h1>
+    <form method="post" class=" flex flex-row gap-6 ">
+        {% csrf_token %}
+        <button type="submit" class="bg-red-500 text-white px-4 py-1 rounded-lg ">Yes</button>
+        <a href="{% url 'my_organizations' %}" class="bg-slate-600 text-white px-4 py-1 rounded-lg">No</a>
+    </form>
+</main>
+{% endblock %}

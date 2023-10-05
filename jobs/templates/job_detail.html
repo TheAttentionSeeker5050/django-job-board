@@ -3,27 +3,29 @@
 
 
 {% block title %}
-  Job - List
+  Job - {{ job.title }}
 {% endblock title %}
 
 
 
 {% block content %}
 
-  <main class="max-w-md p-8 mx-auto my-6 ">
-    <h1 class="text-3xl font-bold text-center text-slate-600">Panda Jobs - Job List</h1>
+<main class="max-w-4xl p-8 mx-auto my-6 flex flex-col gap-4">
+    <h1 class="text-3xl font-bold text-center text-slate-600">{{job.title}}</h1>
     
-    <div class="mt-8">
-      <ul>
-        {% for job in jobs %}
-          <li class="mb-4">
-            <!-- id=job.id -->
-            <a href="{% url 'job_detail' id=job.id %}" 
-            class="text-xl font-bold text-slate-600">{{ job.title }}</a>
-            <p class="text-gray-600">{{ job.description }}</p>
-          </li>
-        {% endfor %}
-      </ul>
+    <a href="{{ previous_url }}" class="px-4 py-1 bg-slate-600 text-white rounded-lg mr-auto">Go Back</a>
+
+    <h2>Description</h2>
+
+    <p>{{job.description}}</p>
+
+    <div>
+      <p><strong>Location:</strong>{{job.location}}</p>
+      <p><strong>Company:</strong>{{job.company}}</p>
+      <p><strong>Employment Type:</strong>{{job.employment_type}}</p>
+      <p><strong>Experience Level:</strong>{{job.experience_level}}</p>
+      <p><strong>Salary Range:</strong>{{job.salary_range}}</p>
+      <p><strong>Deadline:</strong>{{job.deadline}}</p>
     </div>
 
   </main>

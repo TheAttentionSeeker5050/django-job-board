@@ -6,11 +6,11 @@ urlpatterns = [
     path('', AllJobListView.as_view(), name='list_jobs'),
 
     # job detail view
-    path('<int:id>/', JobDetailView.as_view(), name='job_detail'),
+    path('<int:pk>/', JobDetailView.as_view(), name='job_detail'),
 
     # update job view
     path('update/<int:pk>/', JobUpdateView.as_view(), name='update_job'),
 
     # delete job view
-    path('delete/<int:id>/', JobDeleteView.as_view(), name='delete_job'),
+    path('delete/<int:pk>/', JobDeleteView.as_view(), name='delete_job'),
 ]

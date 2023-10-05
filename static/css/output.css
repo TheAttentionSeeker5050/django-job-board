@@ -812,14 +812,14 @@ video {
   border-color: rgb(100 116 139 / var(--tw-border-opacity));
 }
 
-.border-slate-800 {
-  --tw-border-opacity: 1;
-  border-color: rgb(30 41 59 / var(--tw-border-opacity));
-}
-
 .border-slate-600 {
   --tw-border-opacity: 1;
   border-color: rgb(71 85 105 / var(--tw-border-opacity));
+}
+
+.border-slate-800 {
+  --tw-border-opacity: 1;
+  border-color: rgb(30 41 59 / var(--tw-border-opacity));
 }
 
 .bg-cyan-100 {
@@ -986,6 +986,10 @@ video {
 
 .outline-0 {
   outline-width: 0px;
+}
+
+div.pointer-events-none svg.fill-current.h-4.w-4 {
+  display: none;
 }
 
 .hover\:bg-purple-400:hover {

@@ -19,11 +19,13 @@ class JobCreateForm(forms.ModelForm):
             
         text_input_class_utility = 'border-2 border-slate-600 rounded-md shadow-sm px-4 py-2 text-base text-slate-800 focus:outline-none focus:ring-2 focus:border-slate-800 focus:border-transparent '
         
+        select_class_utility = 'form-control'
         
         for field in self.fields.values():
             # make cases for different types of fields
             if field.widget.__class__.__name__ == 'Select':
-                field.widget.attrs.update({'class': 'form-select', })
+                field.widget = forms.Select(attrs={'class': select_class_utility})
+                
             elif field.widget.__class__.__name__ == 'DateInput':
                 field.widget = forms.DateInput({'class': text_input_class_utility, 'type': 'date'})
             elif field.widget.__class__.__name__ == 'Textarea':
