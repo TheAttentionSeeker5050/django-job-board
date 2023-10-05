@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+
+{% block title %}
+  Update Job
+{% endblock title %}
+
+<!-- load crispy forms -->
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+{% load crispy_forms_filters %}
+
+
+{% block content %}
+
+  <main class="max-w-md p-8 mx-auto my-6 ">
+    <h1 class="text-3xl font-bold text-center text-slate-600">Panda Jobs - Update Job</h1>
+    
+
+    <!-- build the create job post form using crispyforms -->
+    <form action="" method="POST" class="my-12 flex flex-col gap-4 ">
+        {% csrf_token %}
+  
+        <!-- add form invalid message -->
+        {% if form.errors %}
+          <p class="text-red-500 text-xs italic">Please fix the errors below.</p>
+        {% endif %}
+
+
+        {{ form.title|as_crispy_field }}
+        {{ form.description|as_crispy_field }}
+        {{ form.location|as_crispy_field }}
+        {{ form.employment_type|as_crispy_field }}
+        {{ form.experience_level|as_crispy_field }}
+        {{ form.salary_range|as_crispy_field }}
+        {{ form.qualifications|as_crispy_field }}
+        {{ form.responsibilities|as_crispy_field }}
+        {{ form.skills_required|as_crispy_field }}
+        {{ form.deadline|as_crispy_field }}
+  
+        <!-- submit -->
+        <button type="submit" class="py-2 my-4 px-8 rounded-xl bg-purple-500 text-white hover:bg-purple-400 grow">Edit Company</button>
+      </form>
+    
+  </main>
+{% endblock content %}
+  

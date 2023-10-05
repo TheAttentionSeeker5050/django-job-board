@@ -25,7 +25,6 @@ class Job(models.Model):
     responsibilities = models.TextField(blank=True, null=True)
     skills_required = models.TextField(blank=True, null=True)
     deadline = models.DateField(blank=True, null=True)
-    date_posted = models.DateField(auto_now_add=True)
 
     # return string
     def __str__(self):

@@ -4,30 +4,44 @@ Company Detail
 {% endblock %}
 
 {% block content %}
-<main class="max-w-4xl p-8 mx-auto my-6 ">
-    <a href="{{ previous_url }}" class="btn btn-primary">Go Back</a>
-    <h1>{{ company.company_name }}</h1>
-    <p>Industry: {{ company.industry }}</p>
-    <p>Location: {{ company.location }}</p>
+<main class="max-w-4xl p-8 mx-auto my-6 flex flex-col gap-4">
+    <a href="{{ previous_url }}" class="px-4 py-1 bg-slate-600 text-white rounded-lg mr-auto">Go Back</a>
+    <h1 class="text-2xl font-bold text-slate-600">{{ company.company_name }}</h1>
+    <p><strong>Industry:</strong> {{ company.industry }}</p>
+    <p><strong>Location:</strong> {{ company.location }}</p>
 
     
     {% if is_owner %}
-    <a href="/companies/{{ company.id }}/edit">Edit</a>
-    <a href="/companies/{{ company.id }}/delete">Delete</a>
+    <div class="flex flex-row gap-4">
+
+        <a href="/companies/{{ company.id }}/edit" class="px-4 py-1 rounded-lg text-white bg-slate-600">Edit</a>
+        <a href="/companies/{{ company.id }}/delete" class="px-4 py-1 rounded-lg text-white bg-red-500">Delete</a>
+
+    </div>
     {% endif %}
     
-    <h2>Job Posts</h2>
-    <ul>
-        <li><a href="">Create Job Post</a></li>
+    <h2 class="text-xl mt-12 font-bold text-slate-600">Job Posts</h2>
+    {% if is_owner %}
+        <a href="{% url 'create_job' company_pk=company.id %}" class="px-4 py-1 bg-emerald-600 text-white rounded-lg mr-auto">Create Job Post</a>
+    {% endif %}
+    <div class="my-6 justify-stretch flex flex-col gap-4 ">
+        
         {% for job in jobs %}
-        <li>
-            {{ job.title }}
+        <div class="flex gap-8 justify-between" >
+            <span class="text-xl font-bold text-slate-600">
+                {{ job.title }}
+            </span>
+
             {% if is_owner %}
-            <a href="/jobs/{{ job.id }}/edit">Edit</a>
-            <a href="/jobs/{{ job.id }}/delete">Delete</a>
+            <div class="gap-8 flex">
+                <!-- we want to use company pk in job relation for the anchor link url -->
+                <!-- <a href="/companies/{{ job.company.id }}/jobs/{{ job.id }}/edit" class="px-4 py-1 rounded-lg text-white bg-slate-600">Edit</a> -->
+                <a href="{% url 'update_job' pk=job.id %}" class="px-4 py-1 rounded-lg text-white bg-slate-600">Edit</a>
+                <a href="jobs/delete/{{ job.id }}/" class="px-4 py-1 rounded-lg text-white bg-red-500">Delete</a>
+            </div>
             {% endif %}
-        </li>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
 </main>
 {% endblock %}

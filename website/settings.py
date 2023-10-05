@@ -114,6 +114,11 @@ DATABASES = {
 # the user model as the default model
 AUTH_USER_MODEL = 'users.CustomUser'
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 5 * 60 * 60
+SESSION_IDLE_TIMEOUT = 5 * 60 * 60
+SESSION_SAVE_EVERY_REQUEST = True # "False" by default
+
 LOGIN_REDIRECT_URL = 'home'
 
 # Password validation

@@ -98,4 +98,5 @@ class CompanyDetailView(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['jobs'] = Job.objects.filter(company=self.object)
         context['is_owner'] = self.request.user == self.object.owner
+        context['previous_url'] = self.request.META.get('HTTP_REFERER', '/')
         return context

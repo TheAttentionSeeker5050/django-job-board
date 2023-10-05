@@ -1,5 +1,7 @@
 from django.urls import path
 from .views import MyOrganizationsCompanyListView, AllCompanyListView, CreateCompanyView, EditCompanyView, DeleteCompanyView, CompanyDetailView
+from jobs.views import JobCreateView, JobUpdateView
+
 
 urlpatterns = [
     # display all companies owned by the user
@@ -16,6 +18,10 @@ urlpatterns = [
 
     # delete company
     path('<int:pk>/delete/', DeleteCompanyView.as_view(), name='delete_company'),
+
+    # create job view
+    path('<int:company_pk>/jobs/create/', JobCreateView.as_view(), name='create_job'),
+
 
     # company detail
     path('<int:pk>/', CompanyDetailView.as_view(), name='company_detail'),
