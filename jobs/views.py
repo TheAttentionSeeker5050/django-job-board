@@ -36,11 +36,12 @@ class JobDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["job"] = Job.objects.get(id=self.kwargs.get('pk'))
         context['is_owner'] = self.request.user == self.get_object().company.owner
+        print("owner of this page is",context['is_owner'])
         context['previous_url'] = self.request.META.get('HTTP_REFERER', '/')
         return context
 
 # create job view
-class JobCreateView(CreateView):
+class JobCreateView(LoginRequiredMixin, CreateView):
     model = Job
     template_name = 'job_create.html'
     form_class = JobCreateForm
@@ -60,7 +61,7 @@ class JobCreateView(CreateView):
         return reverse_lazy('company_detail', kwargs={'pk': self.kwargs['company_pk']})
     
 # update job view
-class JobUpdateView(UpdateView):
+class JobUpdateView(LoginRequiredMixin, UpdateView):
     model = Job
     template_name = 'job_update.html'
     form_class = JobCreateForm
@@ -75,16 +76,14 @@ class JobUpdateView(UpdateView):
         context['job'] = Job.objects.get(id=self.kwargs.get('pk'))
         return context
     
-    # get success url
     def get_success_url(self):
         # get the pk of the Company this job belongs to
         company_pk = Job.objects.get(id=self.kwargs['pk']).company.id
         return reverse_lazy('company_detail', kwargs={'pk': company_pk})
-        # return reverse_lazy('my_organizations')
 
 
 # delete job view
-class JobDeleteView(DeleteView):
+class JobDeleteView(LoginRequiredMixin, DeleteView):
     model = Job
     template_name = 'job_delete.html'
     success_url = reverse_lazy('my_organizations')

@@ -20,6 +20,7 @@ class Job(models.Model):
         choices=[('Entry', 'Entry'), ('Mid', 'Mid'), ('Senior', 'Senior')],
         default='Entry'
     )
+    
     salary_range = models.CharField(max_length=50, blank=True, null=True)
     qualifications = models.TextField(blank=True, null=True)
     responsibilities = models.TextField(blank=True, null=True)
