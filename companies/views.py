@@ -17,6 +17,7 @@ from django.http import HttpResponseForbidden, HttpResponseRedirect
 # display all companies owned by the user
 # will find all the companies that the user has link with in CompanyAdmin model
 class MyOrganizationsCompanyListView(LoginRequiredMixin, ListView):
+    """Display a list of companies that the user owns"""
     model = Company
     template_name = 'company_my_organizations.html'
     context_object_name = 'companies'
@@ -26,6 +27,7 @@ class MyOrganizationsCompanyListView(LoginRequiredMixin, ListView):
     
 # display all companies
 class AllCompanyListView(ListView):
+    """Display a list all companies"""
     model = Company
     template_name = 'company_list.html'
     context_object_name = 'companies'
@@ -55,7 +57,7 @@ class CreateCompanyView(LoginRequiredMixin, CreateView):
 class EditCompanyView(LoginRequiredMixin, UpdateView):
     """Edit a company page"""
     model = Company
-    template_name = 'company_edit.html'
+    template_name = 'company_update.html'
     form_class = CompanyCreateForm
     context_object_name = 'company'
     
@@ -67,9 +69,13 @@ class EditCompanyView(LoginRequiredMixin, UpdateView):
         return redirect('home')
     
     def form_valid(self, form):
-        form.instance.owner = self.request.user  # Set the owner to the current user
-        form.save()
-        return super().form_valid(form)
+        # verify that the request user is the owner
+        if self.object.owner == self.request.user:
+            form.save()
+            return super().form_valid(form)
+        else:
+            return HttpResponseForbidden("You don't have permission to edit this company.")
+        
     
 # display delete organization page
 class DeleteCompanyView(LoginRequiredMixin, DeleteView):
@@ -88,7 +94,7 @@ class DeleteCompanyView(LoginRequiredMixin, DeleteView):
             return HttpResponseForbidden("You don't have permission to delete this company.")
 
 
-class CompanyDetailView(LoginRequiredMixin, DetailView):
+class CompanyDetailView(DetailView):
     """Display a company page with all the jobs posted by the company"""
     model = Company
     template_name = 'company_detail.html'

@@ -28,7 +28,16 @@
         {% endif %}
 
 
-        {% crispy form %}
+        {{ form.title|as_crispy_field }}
+        {{ form.description|as_crispy_field }}
+        {{ form.location|as_crispy_field }}
+        {{ form.employment_type|as_crispy_field }}
+        {{ form.experience_level|as_crispy_field }}
+        {{ form.salary_range|as_crispy_field }}
+        {{ form.qualifications|as_crispy_field }}
+        {{ form.responsibilities|as_crispy_field }}
+        {{ form.skills_required|as_crispy_field }}
+        {{ form.deadline|as_crispy_field }}
         
         <!-- submit -->
         <button type="submit" class="py-2 my-4 px-8 rounded-xl bg-purple-500 text-white hover:bg-purple-400 grow">Edit Company</button>

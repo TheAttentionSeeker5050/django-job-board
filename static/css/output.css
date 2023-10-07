@@ -709,10 +709,6 @@ video {
   flex-wrap: nowrap;
 }
 
-.place-content-start {
-  place-content: start;
-}
-
 .items-center {
   align-items: center;
 }
