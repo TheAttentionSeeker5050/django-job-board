@@ -1,5 +1,7 @@
 from typing import Any
 from django.db import models
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, ListView
@@ -69,7 +71,16 @@ class JobUpdateView(LoginRequiredMixin, UpdateView):
     
     
     def form_valid(self, form):
-        return super().form_valid(form)
+        # verify that the request user is the owner
+        if self.object.company.owner == self.request.user:
+            form.save()
+            return super().form_valid(form)
+        else:
+            return HttpResponseForbidden("You don't have permission to edit this job.")
+        
+    # if any field is invalid in the form, render error on template
+    def form_invalid(self, form):
+        return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):
         context = super(JobUpdateView, self).get_context_data(**kwargs)
@@ -87,6 +98,15 @@ class JobDeleteView(LoginRequiredMixin, DeleteView):
     model = Job
     template_name = 'job_delete.html'
     success_url = reverse_lazy('my_organizations')
+    context_object_name = 'job'
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.company.owner == self.request.user: # Check if the logged-in user is the owner
+            self.object.delete()
+            return redirect(self.get_success_url())
+        else:
+            return HttpResponseForbidden("You don't have permission to delete this job.")
     
     def get_queryset(self):
         # filter by url param id=job.id

@@ -1,6 +1,7 @@
 """Forms for the jobs views"""
 from django import forms
 from .models import Job
+from crispy_forms.helper import FormHelper
 
 # form for create job view
 class JobCreateForm(forms.ModelForm):
@@ -13,6 +14,7 @@ class JobCreateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
         # custom utilities classes
         
         text_area_class_utility = 'border-2 border-slate-600 rounded-md shadow-sm px-4 py-2 text-base text-slate-800 focus:outline-none focus:ring-2 focus:border-slate-800 focus:border-transparent '
