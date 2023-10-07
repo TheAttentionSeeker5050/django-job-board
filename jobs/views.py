@@ -38,7 +38,8 @@ class JobDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["job"] = Job.objects.get(id=self.kwargs.get('pk'))
         context['is_owner'] = self.request.user == self.get_object().company.owner
-        print("owner of this page is",context['is_owner'])
+        # print("owner of this page is",context['is_owner'])
+        print("job description is",context['job'].description)
         context['previous_url'] = self.request.META.get('HTTP_REFERER', '/')
         return context
 

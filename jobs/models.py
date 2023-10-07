@@ -2,10 +2,12 @@ from django.db import models
 
 # Create your models here.
 from companies.models import Company
+from tinymce import models as tinymce_models
 
+# job model
 class Job(models.Model):
     title = models.CharField(max_length=100)
-    description = models.TextField()
+    description = tinymce_models.HTMLField(default='', blank=True, null=True)
     location = models.CharField(max_length=50)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     
@@ -22,10 +24,11 @@ class Job(models.Model):
     )
     
     salary_range = models.CharField(max_length=50, blank=True, null=True)
-    qualifications = models.TextField(blank=True, null=True)
-    responsibilities = models.TextField(blank=True, null=True)
-    skills_required = models.TextField(blank=True, null=True)
+    qualifications = tinymce_models.HTMLField(default='')
+    responsibilities = tinymce_models.HTMLField(default='')
+    skills_required = tinymce_models.HTMLField(default='')
     deadline = models.DateField(blank=True, null=True)
+
 
     # return string
     def __str__(self):

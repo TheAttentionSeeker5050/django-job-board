@@ -11,6 +11,9 @@ COPY . ./
 # install django from requirements.txt file
 RUN pip install -r requirements.txt
 
+# RUN python3 manage.py collectstatic --noinput
+# RUN python3 manage.py migrate
+
 # you should have this run when making changes to template styles using tailwindcss
 # RUN ./tailwindcss -i static/css/input.css -o static/css/output.css --watch
 

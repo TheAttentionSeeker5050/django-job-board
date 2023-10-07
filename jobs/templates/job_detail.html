@@ -26,7 +26,9 @@
       
     <h2 class="text-xl font-bold text-slate-600">Description</h2>
 
-    <p>{{ job.description }}</p>
+    <p>
+      {{ job.description | safe }}
+    </p>
 
     <div class="max-w-lg w-full flex flex-row flex-wrap gap-y-2">
       <p class="w-1/2"><strong>Location: </strong>{{ job.location }}</p>
@@ -38,13 +40,13 @@
     </div>
 
     <h2 class="text-xl font-bold text-slate-600">Qualifications</h2>
-    <p>{{ job.qualifications }}</p>
+    <p>{{ job.qualifications | safe }}</p>
 
     <h2 class="text-xl font-bold text-slate-600">Responsibilities</h2>
-    <p>{{ job.responsibilities }}</p>
+    <p>{{ job.responsibilities | safe }}</p>
 
     <h2 class="text-xl font-bold text-slate-600">Skills Required</h2>
-    <p>{{ job.skills_required }}</p>
+    <p>{{ job.skills_required | safe }}</p>
 
 
   </main>
