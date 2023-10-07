@@ -100,7 +100,7 @@ WSGI_APPLICATION = 'website.wsgi.application'
 
 # tinyMCE settings
 # TINYMCE_JS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.7.0/tinymce.min.js'
-TINYMCE_JS_URL = os.path.join(BASE_DIR, "static/libs/tinymce/js/tinymce/tinymce.min.js")
+TINYMCE_JS_URL = os.path.join(BASE_DIR, "static/libs/tinymce/tinymce.min.js")
 TINYMCE_COMPRESSOR = False
 
 
