@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'crispy_forms',
     'crispy_tailwind',
+    'tinymce',
 
     # local apps
     'users',
@@ -91,6 +92,14 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
 
 WSGI_APPLICATION = 'website.wsgi.application'
+
+# rich text editor settings
+
+# tinyMCE settings
+# TINYMCE_JS_URL = 'https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'
+TINYMCE_JS_URL = os.path.join(BASE_DIR, "static/libs/tinymce/js/tinymce.min.js")
+TINYMCE_COMPRESSOR = False
+
 
 
 # Database

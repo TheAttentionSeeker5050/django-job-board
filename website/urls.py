@@ -22,6 +22,9 @@ urlpatterns = [
     # django browser reload
     path("__reload__/", include("django_browser_reload.urls")),
 
+    # text editor import
+    path('tinymce/', include('tinymce.urls')),
+
     # error pages
     path('error/', TemplateView.as_view(template_name='error.html'), name='error'),
 
