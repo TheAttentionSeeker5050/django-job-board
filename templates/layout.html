@@ -10,7 +10,15 @@
   <title>Panda Jobs -
     {% block title %}
     {% endblock title %}
+
   </title>
+  <script src="{% static 'libs/tinymce/js/tinymce/tinymce.min.js' %}" ></script>
+  <!-- <script src="{{ TINYMCE_JS_URL }}" ></script> -->
+  <script>
+    tinymce.init({
+      selector: 'textarea',
+    });
+  </script>
 </head>
 <body class="min-h-screen ">
   

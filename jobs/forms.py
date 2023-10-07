@@ -1,20 +1,34 @@
 """Forms for the jobs views"""
 from django import forms
 from .models import Job
-from crispy_forms.helper import FormHelper
+from tinymce.widgets import TinyMCE
 
 # form for create job view
 class JobCreateForm(forms.ModelForm):
     class Meta:
         model = Job
-        fields = ['title', 'description', 'location', 'employment_type', 'experience_level', 'salary_range', 'qualifications', 'responsibilities', 'skills_required', 'deadline']
-        # fields = ['title', 'description', 'company', 'location', 'employment_type', 'experience_level', 'salary_range', 'qualifications', 'responsibilities', 'skills_required', 'deadline']
+        fields = ['title', 'description', 'location', 'employment_type', 'experience_level', 'salary_range', 'qualifications', 'responsibilities', 'skills_required', 'deadline', 'external_link']
+
+
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Job Title'}),
+            'description': TinyMCE(attrs={'cols': 30, 'rows': 15}),
+            'location': forms.TextInput(attrs={'placeholder': 'Location'}),
+            'employment_type': forms.Select(attrs={'placeholder': 'Employment Type'}),
+            'experience_level': forms.Select(attrs={'placeholder': 'Experience Level'}),
+            'salary_range': forms.TextInput(attrs={'placeholder': 'Salary Range'}),
+            'qualifications': TinyMCE(attrs={'cols': 30, 'rows': 15}),
+            'responsibilities': TinyMCE(attrs={'cols': 30, 'rows': 15}),
+            'skills_required': TinyMCE(attrs={'cols': 30, 'rows': 15}),
+            'deadline': forms.DateInput(attrs={'type': 'date'}),
+            'external_link': forms.URLInput(attrs={'placeholder': 'format starting with https://', }),
+        }
+
 
         
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
         # custom utilities classes
         
         text_area_class_utility = 'border-2 border-slate-600 rounded-md shadow-sm px-4 py-2 text-base text-slate-800 focus:outline-none focus:ring-2 focus:border-slate-800 focus:border-transparent '
@@ -30,10 +44,10 @@ class JobCreateForm(forms.ModelForm):
                 
             elif field.widget.__class__.__name__ == 'DateInput':
                 field.widget = forms.DateInput({'class': text_input_class_utility, 'type': 'date'})
+
             elif field.widget.__class__.__name__ == 'Textarea':
                 field.widget.attrs.update({'class': text_area_class_utility})
-            elif field.widget.__class__.__name__ == 'TextInput':
-                field.widget.attrs.update({'class': text_input_class_utility})
+                
             else:
                 field.widget.attrs.update({'class': text_input_class_utility})
     

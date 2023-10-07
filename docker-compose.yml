@@ -3,6 +3,7 @@ services:
   db:
     image: postgres:latest
     restart: always
+    container_name: database
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -17,11 +18,14 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    # networks:
+    #   - jobboard_django_network
   web:
     build:
       context: "./"
       dockerfile: "django.Dockerfile"
     restart: always
+    container_name: web
     command: python3 manage.py runserver 0.0.0.0:8000
     ports:
       - "8085:8000"
@@ -32,6 +36,9 @@ services:
     depends_on: 
       db:
         condition: service_healthy
+    # networks:
+    #   - jobboard_django_network
 volumes:
   postgres_data:
-    
+# networks:
+#   jobboard_django_network:

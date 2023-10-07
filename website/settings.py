@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent
 
 # set the path for env file
 load_dotenv(os.path.join(BASE_DIR, '.env'))
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'django_browser_reload',
     'crispy_forms',
     'crispy_tailwind',
+    'tinymce',
 
     # local apps
     'users',
@@ -81,6 +83,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'website.context_processors.tinymce_js_url',
+
             ],
         },
     },
@@ -91,6 +95,14 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
 
 WSGI_APPLICATION = 'website.wsgi.application'
+
+# rich text editor settings
+
+# tinyMCE settings
+# TINYMCE_JS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.7.0/tinymce.min.js'
+TINYMCE_JS_URL = os.path.join(BASE_DIR, "static/libs/tinymce/js/tinymce/tinymce.min.js")
+TINYMCE_COMPRESSOR = False
+
 
 
 # Database

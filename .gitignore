@@ -353,6 +353,3 @@ migrations/
 .vscode/settings.json
 
 tailwindcss
-
-
-static/libs/tinymce/
