@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+
+{% block title %}
+  Job - {{ job.title }}
+{% endblock title %}
+
+
+
+{% block content %}
+
+<main class="max-w-4xl p-8 mx-auto my-6 flex flex-col gap-8">
+    <h1 class="text-3xl font-bold text-center text-slate-600">{{ job.title }}</h1>
+    
+    <div class="flex gap-4 flex-row place-self-start">
+
+      <a href="{{ previous_url }}" class="px-4 py-1 bg-slate-600 text-white rounded-lg mr-auto">Go Back</a>
+
+      <!-- if is owner, display these buttons -->
+      {% if is_owner %}
+      <a href="{% url 'update_job' pk=job.id %}" class="px-4 py-1 bg-slate-600 text-white rounded-lg mr-auto">Update</a>
+      <a href="{% url 'delete_job' pk=job.id %}" class="px-4 py-1 bg-red-500 text-white rounded-lg mr-auto">Delete</a>
+      {% endif %}
+    </div>
+      
+    <h2 class="text-xl font-bold text-slate-600">Description</h2>
+
+    <p>{{ job.description }}</p>
+
+    <div class="max-w-lg w-full flex flex-row flex-wrap gap-y-2">
+      <p class="w-1/2"><strong>Location: </strong>{{ job.location }}</p>
+      <p class="w-1/2"><strong>Company: </strong>{{ job.company }}</p>
+      <p class="w-1/2"><strong>Employment Type: </strong>{{ job.employment_type }}</p>
+      <p class="w-1/2"><strong>Experience Level: </strong>{{job.experience_level}}</p>
+      <p class="w-1/2"><strong>Salary Range: </strong>{{ job.salary_range }}</p>
+      <p class="w-1/2"><strong>Deadline: </strong>{{ job.deadline }}</p>
+    </div>
+
+    <h2 class="text-xl font-bold text-slate-600">Qualifications</h2>
+    <p>{{ job.qualifications }}</p>
+
+    <h2 class="text-xl font-bold text-slate-600">Responsibilities</h2>
+    <p>{{ job.responsibilities }}</p>
+
+    <h2 class="text-xl font-bold text-slate-600">Skills Required</h2>
+    <p>{{ job.skills_required }}</p>
+
+
+  </main>
+{% endblock content %}
+  

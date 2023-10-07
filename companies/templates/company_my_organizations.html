@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+
+{% block title %}
+  Delete Account
+{% endblock title %}
+
+
+
+{% block content %}
+
+  <main class="max-w-4xl p-8 mx-auto my-6 ">
+    <h1 class="text-3xl font-bold text-center text-slate-600">Panda Jobs - My Organizations</h1>
+    
+    <section id="upper-options-section" class="flex flex-row justify-end gap-4 my-8">
+      <!-- menu with create new organization, and sorting buttons -->
+      <span>Filter by:</span>
+      <a href="#" class="text-center py-1 px-4 rounded-xl bg-slate-600 text-white hover:bg-slate-400 text-center ">Name</a>
+      <a href="#" class="text-center py-1 px-4 rounded-xl bg-slate-600 text-white hover:bg-slate-400 text-center">Date</a>
+      
+      <a href="/companies/create" class="ml-8 text-center py-1 px-4 rounded-xl bg-emerald-600 text-white hover:bg-emerald-400">New Organization</a>
+
+    </section>
+
+    <!-- display the organizations here, use grid items
+    will display company name, owner and edit and delete buttons
+    use titles and logo for the grid items
+
+    -->
+    <section id="grid-organizations-wrapper" class="grid grid-cols-3 gap-6 my-8 items-center">
+      {% for company in companies %}
+        <!-- <div class="flex flex-col justify-between gap-4 p-4 border-2 border-slate-500 rounded-xl"> -->
+          <div class="flex flex-row justify-between gap-4">
+            <a href="/companies/{{ company.id }}" class="text-2xl font-bold text-slate-600">{{ company.company_name }}</a>
+          </div>
+          <p class="text-slate-600">Owner: {{ company.owner }}</p>
+          <div class="flex flex-row justify-between gap-4">
+            <a href="/companies/{{ company.id }}/edit/" class="text-center py-1 px-4 rounded-xl bg-slate-600 text-white hover:bg-slate-400 text-center ">Edit</a>
+            <a href="/companies/{{ company.id }}/delete/" class="text-center py-1 px-4 rounded-xl bg-red-500 text-white">Delete</a>
+          </div>
+        <!-- </div> -->
+      {% endfor %}
+
+    </section>
+    
+    <!-- if no content in companies, display message -->
+    {% if companies|length == 0 %}
+      <p class="text-slate-600 font-semibold text-center">You have no organizations yet.</p>
+    {% endif %}
+
+  </main>
+{% endblock content %}
+  
