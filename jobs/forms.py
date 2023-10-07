@@ -7,8 +7,8 @@ from tinymce.widgets import TinyMCE
 class JobCreateForm(forms.ModelForm):
     class Meta:
         model = Job
-        fields = ['title', 'description', 'location', 'employment_type', 'experience_level', 'salary_range', 'qualifications', 'responsibilities', 'skills_required', 'deadline']
-        # fields = ['title', 'description', 'company', 'location', 'employment_type', 'experience_level', 'salary_range', 'qualifications', 'responsibilities', 'skills_required', 'deadline']
+        fields = ['title', 'description', 'location', 'employment_type', 'experience_level', 'salary_range', 'qualifications', 'responsibilities', 'skills_required', 'deadline', 'external_link']
+
 
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Job Title'}),
@@ -21,7 +21,7 @@ class JobCreateForm(forms.ModelForm):
             'responsibilities': TinyMCE(attrs={'cols': 30, 'rows': 15}),
             'skills_required': TinyMCE(attrs={'cols': 30, 'rows': 15}),
             'deadline': forms.DateInput(attrs={'type': 'date'}),
-
+            'external_link': forms.URLInput(attrs={'placeholder': 'format starting with https://', }),
         }
 
 
@@ -44,10 +44,10 @@ class JobCreateForm(forms.ModelForm):
                 
             elif field.widget.__class__.__name__ == 'DateInput':
                 field.widget = forms.DateInput({'class': text_input_class_utility, 'type': 'date'})
+
             elif field.widget.__class__.__name__ == 'Textarea':
                 field.widget.attrs.update({'class': text_area_class_utility})
-            elif field.widget.__class__.__name__ == 'TextInput':
-                field.widget.attrs.update({'class': text_input_class_utility})
+                
             else:
                 field.widget.attrs.update({'class': text_input_class_utility})
     

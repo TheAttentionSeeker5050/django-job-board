@@ -10,6 +10,8 @@ class Job(models.Model):
     description = tinymce_models.HTMLField(default='', blank=True, null=True)
     location = models.CharField(max_length=50)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
+
+    external_link = models.URLField(blank=True, null=True)
     
     # Additional Fields
     employment_type = models.CharField(
