@@ -62,6 +62,7 @@ class JobApplicant(models.Model):
         verbose_name='Work Experience',
         blank=True
     )
+    
     skills = ArrayField(
         models.CharField(max_length=50, blank=True),
         verbose_name='Skills',

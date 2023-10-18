@@ -22,6 +22,12 @@ EducationFormSet = formset_factory(EducationForm, extra=1)
 
 class JobApplicantForm(forms.ModelForm):
     skills = forms.CharField(widget=forms.TextInput(attrs={'class': 'skill-input'}), required=False)
+
+    # allow to create a new resume, experience, and education on job applicant creation
+    resume = ResumeForm()
+    experience = ExperienceFormSet()
+    education = EducationFormSet()
+
     
     class Meta:
         model = JobApplicant
