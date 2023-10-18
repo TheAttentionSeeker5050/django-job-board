@@ -10,9 +10,18 @@
 
 {% block content %}
 
-  <main class="max-w-md p-8 mx-auto my-6 ">
-    <h1 class="text-3xl font-bold text-center text-slate-600">Panda Jobs - My Resumes</h1>
+  <main class="max-w-4xl p-8 mx-auto my-6 flex flex-col gap-12 ">
+    <h1 class="text-3xl font-bold text-center text-slate-600" >Panda Jobs - My Resumes</h1>
     
+    <section id="upper-options-section" class="flex flex-row gap-4 ">
+      <a href="{% url 'my_resumes_create' %}" class="ml-8 text-center py-1 px-4 rounded-xl bg-emerald-600 text-white hover:bg-emerald-400 text-lg">New Resume Profile</a>
+    </section>
+
+    <section id="resumes-list-wrapper" class="flex flex-col gap-4">
+      <div>
+        {{ resumes }}
+      </div>
+    </section>
 
   </main>
 {% endblock content %}

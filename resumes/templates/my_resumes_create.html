@@ -1,0 +1,154 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+
+{% block title %}
+  Create a Resume Profile
+{% endblock title %}
+
+<!-- load crispy forms -->
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+{% load crispy_forms_filters %}
+
+{{ form.media }}
+
+
+{% block content %}
+
+  <main class="max-w-4xl p-8 mx-auto my-6 flex flex-col gap-12 ">
+    <h1 class="text-3xl font-bold text-center text-slate-600" >Create a Resume</h1>
+
+    <form action="" method="POST" enctype="multipart/form-data" class="my-12 flex flex-col gap-4 ">
+        {% csrf_token %}
+
+        <!-- add form invalid message -->
+        {% if form.errors %}
+          <p class="text-red-500 text-xs italic">Please fix the errors below.</p>
+        {% endif %}
+
+        {{ form.title|as_crispy_field }}
+        {{ form.resume_file|as_crispy_field }}
+
+        <div id="skills-container" class="flex flex-row gap-4">
+            <input type="text" name="skills" id="skills" class="skill-input border-2 rounded-lg border-slate-800 px-4 py-1" placeholder="Enter a skill and press Add">
+            <button type="button" id="add-skill" class="bg-emerald-600 text-white px-4 py-1 rounded-lg">Add Skill</button>
+            <button type="button" id="drop-all-skills" class="bg-red-500 text-white px-4 py-1 rounded-lg">Drop All Skills</button>
+        </div>
+        <div id="skills-bank-container" class="flex flex-row flex-wrap gap-4">
+            <!-- this will contain all the skills buttons -->
+
+        </div>
+
+        {{ resume_form.title|as_crispy_field }}
+    
+        <div id="experience-formset">
+            {{ experience_formset.management_form }}
+            {% for form in experience_formset %}
+                <div class="experience-form">
+                    {{ form.term|as_crispy_field }}
+                    {{ form.title|as_crispy_field }}
+                    {{ form.company|as_crispy_field }}
+                </div>
+            {% endfor %}
+        </div>
+        <button type="button" id="add-experience">Add More Experience</button>
+    
+        <div id="education-formset">
+            {{ education_formset.management_form }}
+            {% for form in education_formset %}
+                <div class="education-form">
+                    {{ form.term|as_crispy_field }}
+                    {{ form.title|as_crispy_field }}
+                    {{ form.institution|as_crispy_field }}
+                </div>
+            {% endfor %}
+        </div>
+        <button type="button" id="add-education">Add More Education</button>
+    
+        <button type="submit">Submit</button>
+    </form>
+
+  </main>
+
+  
+    <script>
+        $(document).ready(function() {
+            let skillList = [];
+
+            
+
+            function repopulateSkills() {
+                // clear the skills-bank-container
+                $('#skills-bank-container').empty();
+
+                // add the skills to the skills-bank-container
+                skillList.forEach(skill => {
+                    $('#skills-bank-container').append(`<button type="button" class="text-white bg-slate-400 px-4 py-1 rounded-lg skill-card">${skill}</button>`);
+                });
+            }
+
+
+            
+
+            $('#add-skill').click(function() {
+                const skillInput = $('#skills').val();
+
+                if (skillInput === '') {
+                    return;
+                }
+                // separate the skills into an array by comma
+                let skills = skillInput.split(',');
+
+                // merge skills into skillList
+                skillList = skillList.concat(skills);
+
+                repopulateSkills();
+
+
+                // clear the input field
+                $('#skills').val('');
+
+                // set the focus on the skills input field
+                $('#skills').focus();
+            });
+
+            // remove all skills from the skillList
+            $('#drop-all-skills').click(function() {
+                skillList = [];
+                repopulateSkills();
+            });
+
+            $('#add-experience').click(function() {
+                alert('clicked add experience');
+                // Clone and append experience form
+                // Update the 'name' and 'id' attributes
+            });
+
+            $('#add-education').click(function() {
+                alert('clicked add education');
+                // Clone and append education form 
+                // Update the 'name' and 'id' attributes
+            });
+
+            $('#submitForm').click(function() {
+                $.ajax({
+                    url: '',  // Your form submit URL
+                    type: 'POST',
+                    data: $('#jobApplicantForm').serialize(),
+                    success: function(response) {
+                        // Handle success
+                    },
+                    error: function(error) {
+                        // Handle error
+                    }
+                });
+            });
+
+            
+
+            
+        });
+    </script>
+{% endblock content %}
+  
