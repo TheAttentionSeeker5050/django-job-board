@@ -25,10 +25,8 @@ class JobApplicantForm(forms.ModelForm):
 
     # allow to create a new resume, experience, and education on job applicant creation
     resume = ResumeForm()
-    experience = ExperienceFormSet()
-    education = EducationFormSet()
-
     
     class Meta:
         model = JobApplicant
+        # fields = ['title', 'resume_file', 'skills']
         fields = ['title', 'resume_file', 'skills']

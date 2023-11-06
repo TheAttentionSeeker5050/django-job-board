@@ -355,3 +355,11 @@ migrations/
 tailwindcss
 
 static/libs/tinymce/
+
+*.pdf
+*.docx
+*.xlsx
+*.pptx
+*.doc
+*.xls
+*.ppt

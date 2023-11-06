@@ -19,7 +19,7 @@
   <main class="max-w-4xl p-8 mx-auto my-6 flex flex-col gap-12 ">
     <h1 class="text-3xl font-bold text-center text-slate-600" >Create a Resume</h1>
 
-    <form action="" method="POST" enctype="multipart/form-data" class="my-12 flex flex-col gap-4 ">
+    <form action="" method="POST" enctype="multipart/form-data" class="my-12 flex flex-col gap-6 ">
         {% csrf_token %}
 
         <!-- add form invalid message -->
@@ -27,8 +27,26 @@
           <p class="text-red-500 text-xs italic">Please fix the errors below.</p>
         {% endif %}
 
-        {{ form.title|as_crispy_field }}
-        {{ form.resume_file|as_crispy_field }}
+        <!-- add the job_applicant context if exist -->
+        <div class="flex flex-col" >
+            <label for="title" class="font-bold">Title*</label>
+            <input type="text" name="title" id="title" class="border-2 rounded-lg border-slate-800 px-4 py-1" placeholder="Enter a title"
+            {% if job_applicant %}
+              value="{{ job_applicant.title }}"
+            {% endif %}
+            >
+        </div>
+
+        <div class="flex flex-col" >
+            <label for="resume_file" class="font-bold">Resume File*</label>
+            <input type="file" name="resume_file" id="resume_file" class="border-2 rounded-lg border-slate-800 px-4 py-1" placeholder="Enter a title"
+            >
+            <!-- show file name if in context -->
+            {% if job_applicant %}
+              <p class="text-lg text-slate-600 break-all">{{ job_applicant.resume_file }}</p>
+            {% endif %}
+        </div>
+        
         <div>
             <label for="skills" class="font-bold">Skills*</label>
             <div id="skills-container" class="flex flex-row gap-4 flex-wrap items-center ">
@@ -38,50 +56,17 @@
                 <i id="skill-error-msg" class="text-red-500 "></i>
             </div>
             <div id="skills-bank-container" class="flex flex-row flex-wrap gap-4">
-                <!-- this will contain all the skills buttons -->
+                
                 
             </div>
         </div>
 
-        {{ resume_form.title|as_crispy_field }}
-    
-        <!-- <div id="experience-formset">
-            {{ experience_formset.management_form }}
-            {% for formItem in experience_formset %}
-                <div class="experience-form">
-                    {{ formItem.term|as_crispy_field }}
-                    {{ formItem.title|as_crispy_field }}
-                    {{ formItem.company|as_crispy_field }}
-                </div>
-            {% endfor %}
-        </div> -->
-
-        <div id="experience-formset">
-            {{ experience_formset.management_form }}
-            {% for formItem in experience_formset %}
-                <div class="experience-form">
-                    {{ formItem.term|as_crispy_field }}
-                    {{ formItem.title|as_crispy_field }}
-                    {{ formItem.company|as_crispy_field }}
-                </div>
-            {% endfor %}
-        </div>
-        <button type="button" id="add-experience">Add More Experience</button>
-    
-        <div id="education-formset">
-            {{ education_formset.management_form }}
-            {% for formItem in education_formset %}
-                <div class="education-form">
-                    {{ formItem.term|as_crispy_field }}
-                    {{ formItem.title|as_crispy_field }}
-                    {{ formItem.institution|as_crispy_field }}
-                </div>
-            {% endfor %}
-        </div>
-        <button type="button" id="add-education">Add More Education</button>
-    
-        <button type="submit">Submit</button>
+        <!-- make a hidden p with the skills list -->
+        <p id="skills-list" class="">{{ job_applicant.skills }}</p>
+            
+        <button type="submit" class="bg-purple-500 text-white px-6 py-1 rounded-lg mx-auto self-center ">Next</button>
     </form>
+    
 
   </main>
 
@@ -89,11 +74,8 @@
     <script>
         $(document).ready(function() {
             let skillList = [];
-            let experienceList = [];
-            let educationList = [];
 
             
-
             function repopulateSkills() {
                 // clear the skills-bank-container
                 $('#skills-bank-container').empty();
@@ -105,7 +87,6 @@
             }
 
 
-            
 
             $('#add-skill').click(function() {
                 const skillInput = $('#skills').val();
@@ -161,19 +142,8 @@
                 repopulateSkills();
             });
 
-            $('#add-experience').click(function() {
-                
-            });
-
-            $('#add-education').click(function() {
-                alert('clicked add education');
-                // Clone and append education form 
-                // Update the 'name' and 'id' attributes
-            });
-
             $('form').submit(function() {
                 // add the skills to the form request
-                
                 
                 // prepare and send the form to the serv3er
                 $.ajax({
@@ -184,14 +154,12 @@
                         'title': $('#id_title').val(),
                         'resume_file': $('#id_resume_file').val(),
                         'skills': skillList,
-                        'experience': experienceList,
-                        'education': educationList,
                     },
                     success: function(response) {
-                        alert('success');
+                        console.log('success');
                     },
                     error: function(response) {
-                        alert('error');
+                        console.log("error");
                     }
                 });
             });
