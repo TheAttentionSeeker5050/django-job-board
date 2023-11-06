@@ -59,16 +59,12 @@ class JobApplicantUpdateView(UpdateView, LoginRequiredMixin):
     fields = ['title', 'resume_file', 'skills']
     template_name = 'my_resumes_create3.html'
     
-    
     def get_context_data(self, **kwargs):
-        # get the context data from url param resume_pk and get it from the db
         context = super().get_context_data(**kwargs)
-        # get the job applicant object
-        job_applicant = JobApplicant.objects.get(pk=self.kwargs['pk'])
-        # add this to the context
-        context['job_applicant'] = job_applicant
-        return context
 
+        context['job_applicant'] = JobApplicant.objects.get(pk=self.kwargs['pk'])
+        return context
+    
     def form_valid(self, form):
         # add user_owner to the form
         form.instance.user_owner = self.request.user
