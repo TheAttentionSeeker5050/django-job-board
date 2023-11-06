@@ -142,7 +142,7 @@ class AddExperienceView(View, LoginRequiredMixin):
             # add the experience to the job applicant
             job_applicant.experience.add(experience)
             # reload the page
-            return redirect('my_resumes_add_experience', pk=resume_pk)
+            return redirect('my_resumes_add_experience', resume_pk=resume_pk)
         
         return render(request, 'my_resume_add_work_experience.html', context)
 
@@ -163,18 +163,18 @@ class DeleteExperienceView(View, LoginRequiredMixin):
 
         # verify that the job experience has foreign key experience, if not return bad request
         if experience not in job_applicant.experience.all():
-            return redirect('my_resumes_add_experience', pk=resume_pk)
+            return redirect('my_resumes_add_experience', resume_pk=resume_pk)
         
         # if user owner not the same as the current user, unauthorized, 
         # for now it only will redirect to the same page
         if job_applicant.user_owner != request.user:
-            return redirect('my_resumes_add_experience', pk=resume_pk)
+            return redirect('my_resumes_add_experience', resume_pk=resume_pk)
 
         # delete the experience
         experience.delete()
 
         # reload the page
-        return redirect('my_resumes_add_experience', pk=resume_pk)
+        return redirect('my_resumes_add_experience', resume_pk=resume_pk)
     
 class EditExperienceView(View, LoginRequiredMixin):
     # get the view template for edit
