@@ -97,29 +97,8 @@
                     $('#skill-error-msg').text('Please enter a skill');
                     return;
                 }
-    
-    def get_context_data(self, **kwargs):
-        # get the context data from url param resume_pk and get it from the db
-        context = super().get_context_data(**kwargs)
-        # get the job applicant object
-        job_applicant = JobApplicant.objects.get(pk=self.kwargs['pk'])
-        # add this to the context
-        context['job_applicant'] = job_applicant
-        return context
-
-    def form_valid(self, form):
-        # add user_owner to the form
-        form.instance.user_owner = self.request.user
-        context = self.get_context_data()
-        
-
-        if form.is_valid():
-            # save the form
-            self.object = form.save()
-            # add the model object pk and redirect to the add experience view
-            return redirect('my_resumes_add_experience', pk=self.object.pk)
-
-        return super().form_valid(form)skillInput.split(',');
+                // separate the skills into an array by comma
+                let skills = skillInput.split(',');
 
                 // remove any whitespace from the skills
                 skills = skills.map(skill => skill.trim());

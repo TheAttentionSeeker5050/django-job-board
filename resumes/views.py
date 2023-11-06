@@ -50,7 +50,7 @@ class JobApplicantCreateView(CreateView, LoginRequiredMixin):
             # save the form
             self.object = form.save()
             # add the model object pk and redirect to the add experience view
-            return redirect('my_resumes_add_experience', pk=self.object.pk)
+            return redirect('my_resumes_add_experience', resume_pk=self.object.pk)
 
         return super().form_valid(form)
     
@@ -75,7 +75,7 @@ class JobApplicantUpdateView(UpdateView, LoginRequiredMixin):
             # save the form
             self.object = form.save()
             # add the model object pk and redirect to the add experience view
-            return redirect('my_resumes_add_experience', pk=self.object.pk)
+            return redirect('my_resumes_add_experience', resume_pk=self.object.pk)
 
         return super().form_valid(form)
 
@@ -98,16 +98,16 @@ class AddExperienceView(View, LoginRequiredMixin):
     # to add more experience or modify existing, we will use the PRG pattern, 
     # this will work for update, and delete as well
     # and will be reloaded into the same page, or probably just rehidrate the data
-    def get(self, request, experience_pk):
+    def get(self, request, resume_pk):
         # use the pk from the url to find the JobApplicant object
-        job_applicant = JobApplicant.objects.get(pk=experience_pk)
+        job_applicant = JobApplicant.objects.get(pk=resume_pk)
 
         # find other experiences associated with this job applicant
         experiences = job_applicant.experience.all()
 
         # verify that user is the owner of the job applicant profile
         if job_applicant.user_owner != request.user:
-            return redirect('my_resumes_add_experience', pk=experience_pk)
+            return redirect('my_resumes_add_experience', resume_pk=resume_pk)
 
         # add the form to the context
         context = {
@@ -118,9 +118,9 @@ class AddExperienceView(View, LoginRequiredMixin):
         
         return render(request, 'my_resume_add_work_experience.html', context)
     
-    def post(self, request, experience_pk):
+    def post(self, request, resume_pk):
         # use the pk from the url to find the JobApplicant object
-        job_applicant = JobApplicant.objects.get(pk=experience_pk)
+        job_applicant = JobApplicant.objects.get(pk=resume_pk)
 
         # find other experiences associated with this job applicant
         experiences = job_applicant.experience.all()
@@ -142,7 +142,7 @@ class AddExperienceView(View, LoginRequiredMixin):
             # add the experience to the job applicant
             job_applicant.experience.add(experience)
             # reload the page
-            return redirect('my_resumes_add_experience', pk=experience_pk)
+            return redirect('my_resumes_add_experience', pk=resume_pk)
         
         return render(request, 'my_resume_add_work_experience.html', context)
 
