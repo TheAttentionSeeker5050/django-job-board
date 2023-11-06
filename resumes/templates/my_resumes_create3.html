@@ -23,8 +23,11 @@
         {% csrf_token %}
 
         <!-- add form invalid message -->
-        {% if form.errors %}
-          <p class="text-red-500 text-xs italic">Please fix the errors below.</p>
+        {% if errors %}
+            <!-- iterate the errors -->
+            {% for error in errors %}
+                <p class="text-red-500 text-xs italic">{{ error }}</p>
+            {% endfor %}
         {% endif %}
 
         <!-- add the job_applicant context if exist -->

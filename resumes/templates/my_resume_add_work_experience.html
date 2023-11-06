@@ -47,7 +47,7 @@
     <form method="POST" enctype="multipart/form-data" id="experience-form" class=" flex flex-col gap-6 ">
         {% csrf_token %}
         
-        {% if form.errors %}
+        {% if errors %}
           <p class="text-red-500 text-xs italic">Please fix the errors below.</p>
         {% endif %}
 
