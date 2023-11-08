@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+
+{% block title %}
+  Add Education
+{% endblock title %}
+
+<!-- load crispy forms -->
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+
+  <main class="max-w-4xl p-8 mx-auto my-6 flex flex-col gap-8  ">
+    <h1 class="text-3xl my-6 font-bold text-center text-slate-600" >Add Education</h1>
+    
+    <table class="table-auto">
+        <thead class="text-left border-b-2 border-slate-800">
+            <tr class="">
+                <th class="">Term</th>
+                <th class="">Title</th>
+                <th class="">Company</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+
+        {% for ed in educations %}
+            <tr class="">
+                
+                <td class="">{{ ed.term }}</td>
+                <td class="">{{ ed.title }}</td>
+                <td class="">{{ ed.institution }}</td>
+                <td class="flex flex-row">
+                    <form action="/resumes/create/{{job_applicant.id}}/add-education/{{ed.id}}/delete/" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class=" bg-red-500 text-white px-6 py-1 rounded-lg ">Delete</button>
+                    </form>
+
+                    <a href="/resumes/create/{{job_applicant.id}}/add-education/{{ed.id}}/edit/" class="mx-3 bg-emerald-500 text-white px-6 py-1 rounded-lg ">Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+
+    <!-- the add new work education form -->
+    <form method="POST" enctype="multipart/form-data" id="education-form" class=" flex flex-col gap-6 ">
+        {% csrf_token %}
+        
+        {% if form.errors %}
+          <p class="text-red-500 text-xs italic">Please fix the errors below.</p>
+        {% endif %}
+
+        <div class="education-form">
+            {{ form.term|as_crispy_field }}
+            {{ form.title|as_crispy_field }}
+            {{ form.institution|as_crispy_field }}
+        </div>
+
+        {% if edit_form %}
+        <div class="mx-auto ">
+            <button type="submit" id="edit-education" class="bg-emerald-500 mx-2 text-white px-6 py-1 rounded-lg">Edit Education</button>
+            <button type="button" id="edit-education" class="bg-purple-500 mx-2 text-white  rounded-lg px-6 py-1" ><a href="/resumes/create/{{job_applicant.id}}/add-education/">Add New Education</a></button>
+        </div>
+
+        {% else %}
+            <button type="submit" id="add-education" class="bg-emerald-500 text-white px-6 py-1 mx-auto rounded-lg">Add Education</button>
+        {% endif %}
+
+    </form>
+
+    <!-- the prev next navigate -->
+    <div class="my-4 flex flex-row gap-6 justify-center">
+        <button type="button" class="bg-purple-500 text-white px-6 py-1 rounded-lg "><a href="{% url 'my_resumes_add_experience' job_applicant.id %}">Previous</a></button>
+        <button type="button" class="bg-purple-500 text-white px-6 py-1 rounded-lg "><a href="{% url 'my_resumes_list' %}">Next</a></button>
+    </div>
+    
+
+  </main>
+{% endblock content %}
+  

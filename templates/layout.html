@@ -12,7 +12,7 @@
     {% endblock title %}
 
   </title>
-  <script src="{% static 'libs/tinymce/js/tinymce/tinymce.min.js' %}" ></script>
+  <script src="{% static 'libs/tinymce/tinymce.min.js' %}" ></script>
   <!-- <script src="{{ TINYMCE_JS_URL }}" ></script> -->
   <script>
     tinymce.init({
@@ -27,6 +27,7 @@
   
   {% endblock header %}
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   
   <!-- make a block content -->
   {% block content %}

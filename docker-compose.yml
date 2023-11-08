@@ -18,8 +18,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    # networks:
-    #   - jobboard_django_network
+    networks:
+      - jobboard_django_network
   web:
     build:
       context: "./"
@@ -36,9 +36,9 @@ services:
     depends_on: 
       db:
         condition: service_healthy
-    # networks:
-    #   - jobboard_django_network
+    networks:
+      - jobboard_django_network
 volumes:
   postgres_data:
-# networks:
-#   jobboard_django_network:
+networks:
+  jobboard_django_network:

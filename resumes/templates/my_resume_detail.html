@@ -1,0 +1,105 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+
+{% block title %}
+  Resume {{job_applicant_data.title}} - Panda Jobs
+{% endblock title %}
+
+
+
+{% block content %}
+
+  <main class="max-w-4xl p-8 mx-auto my-6 flex flex-col gap-12  ">
+    <h1 class="text-3xl font-bold text-center text-slate-600" >Resume - {{job_applicant_data.title}} </h1>
+
+    
+
+    <!-- display the resume info and skills in its own container, this container should be descriptive of the details of a single resume -->
+    <section id="resume-info-wrapper" class="text-justify">
+      
+      <p><strong>Title: </strong>{{job_applicant.title}}</p>
+      <!-- for the resume file, add a download anchor with the resume file route (job_applicant.resume_file) -->
+      <p><strong>Resume File: </strong><a href="{{job_applicant.resume_file.url}}" download class="text-sky-700 font-bold hover:text-sky-500">Download Resume</a></p>
+
+      <!-- display first and last name of user -->
+
+      <!-- if no first and last name, then display no name -->
+      {% if user_data.first_name == "" and user_data.last_name == "" %}
+        <p><strong>Applicant Name: </strong>Not Specified</p>
+      {% else %}
+        <p><strong>Applicant Name: </strong>{{user_data.first_name}} {{user_data.last_name}}</p>
+      {% endif %}
+
+      <p><strong>Email: </strong> {{user_data.email}}</p>
+      
+      <h4 class="text-2xl font-bold my-6">Skills</h4>
+      {% if job_applicant.skills %}
+      {% for skill in job_applicant.skills %}
+        <p>{{skill}}</p>
+      {% endfor %}
+      {% else %}
+        <p>No skills specified</p>
+      {% endif %}
+
+      <h4 class="text-2xl font-bold my-6">Education</h4>
+      {% if education %}
+      <table>
+        <thead>
+          <tr>
+            <th class="px-2 ">Institution</th>
+            <th class="px-2 ">Title</th>
+            <th class="px-2 ">Term</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for edu in education %}
+            <tr>
+              <td class="px-2">{{edu.institution}}</td>
+              <td class="px-2">{{edu.title}}</td>
+              <td class="px-2">{{edu.term}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+        <tr>
+          <td>No education specified</td>
+        </tr>
+      {% endif %}
+      
+      <h4 class="text-2xl font-bold my-6">Experience</h4>
+      <table>
+        <thead>
+          <tr>
+            <th>Company</th>
+            <th>Position</th>
+            <th>Term</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if experience %}
+          {% for exp in experience %}
+            <tr>
+              <td>{{exp.company}}</td>
+              <td>{{exp.position}}</td>
+              <td>{{exp.term}}</td>
+            </tr>
+          {% endfor %}
+          {% else %}
+            <tr>
+              <td>No experience specified</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+      
+    </section>
+
+    
+
+    
+
+  </main>
+{% endblock content %}
+  
