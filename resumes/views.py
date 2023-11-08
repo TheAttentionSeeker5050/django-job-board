@@ -83,13 +83,17 @@ class JobApplicantUpdateView(UpdateView, LoginRequiredMixin):
 
         if form.is_valid():
 
-            # validate that resume file can only accept pdf files
-            if form.cleaned_data['resume_file'].content_type != 'application/pdf':
-                context['form'] = form
-                # add errors to the context array
-                context['errors'] = ['Resume file must be a pdf file']
-                return render(self.request, 'my_resumes_create3.html', context)
-            
+            # because we are uploading a form, them we have to do a try catch
+            try:
+                # verify if there is a new resume_file in the form
+                if form.cleaned_data['resume_file'].content_type != 'application/pdf':
+                    context['form'] = form
+                    # add errors to the context array
+                    context['errors'] = ['Resume file must be a pdf file']
+                    return render(self.request, 'my_resumes_create3.html', context)
+            except:
+                # do nothing, because the user did not upload a new resume file
+                pass
             # save the form
             self.object = form.save()
             # add the model object pk and redirect to the add experience view
