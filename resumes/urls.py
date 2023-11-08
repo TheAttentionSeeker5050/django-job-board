@@ -1,7 +1,9 @@
 from django.urls import path
-from .views import MyApplicantProfilesListView, JobApplicantCreateView, JobApplicantUpdateView, JobApplicantDeleteView, AddExperienceView, DeleteExperienceView, EditExperienceView,  AddEducationView, DeleteEducationView, EditEducationView
+from .views.education_views import AddEducationView, DeleteEducationView, EditEducationView
 
-from .resume_detail_view import ResumeDetailView
+from .views.job_applicant_views import MyApplicantProfilesListView, JobApplicantCreateView, JobApplicantUpdateView, JobApplicantDeleteView
+from .views.work_experience_views import AddExperienceView, DeleteExperienceView, EditExperienceView
+from .views.resume_detail_view import ResumeDetailView
 
 # add the routes for the views here
 
