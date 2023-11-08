@@ -109,12 +109,12 @@ class EditExperienceView(View, LoginRequiredMixin):
 
         # verify that the job experience has foreign key experience, if not return bad request
         if current_work_experience not in job_applicant.experience.all():
-            return redirect('my_resumes_add_experience', pk=resume_pk)
+            return redirect('my_resumes_add_experience', resume_pk=resume_pk)
         
         # if user owner not the same as the current user, unauthorized, 
         # for now it only will redirect to the same page
         if job_applicant.user_owner != request.user:
-            return redirect('my_resumes_add_experience', pk=resume_pk)
+            return redirect('my_resumes_add_experience', resume_pk=resume_pk)
 
         # add the form to the context
         context = {
@@ -135,6 +135,9 @@ class EditExperienceView(View, LoginRequiredMixin):
     # edit the view
     def post(self, request, resume_pk, experience_pk):
         """ edit the experience """
+
+        print("resume_pk" + str(resume_pk))
+        print("experience_pk" + str(experience_pk))
         # use the pk from the url to find the JobApplicant object
         job_applicant = JobApplicant.objects.get(pk=resume_pk)
 
@@ -143,12 +146,12 @@ class EditExperienceView(View, LoginRequiredMixin):
 
         # verify that the job experience has foreign key experience, if not return bad request
         if experience not in job_applicant.experience.all():
-            return redirect('my_resumes_add_experience', pk=resume_pk)
+            return redirect('my_resumes_add_experience', resume_pk=resume_pk)
         
         # if user owner not the same as the current user, unauthorized, 
         # for now it only will redirect to the same page
         if job_applicant.user_owner != request.user:
-            return redirect('my_resumes_add_experience', pk=resume_pk)
+            return redirect('my_resumes_add_experience', resume_pk=resume_pk)
 
         # edit the experience
         experience.term = request.POST['term']
@@ -159,4 +162,4 @@ class EditExperienceView(View, LoginRequiredMixin):
         experience.save()
 
         # reload the page
-        return redirect('my_resumes_add_experience', pk=resume_pk)
+        return redirect('my_resumes_add_experience', resume_pk=resume_pk)

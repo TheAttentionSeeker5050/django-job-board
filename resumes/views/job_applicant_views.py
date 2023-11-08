@@ -1,18 +1,17 @@
-from typing import Any
+# pylint: disable=too-many-ancestors
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from ..models import Resume, JobApplicant, Experience, Education
-from django.views.generic.edit import CreateView, DeleteView
-from django.urls import reverse_lazy
+from resumes.models import JobApplicant
+from django.views.generic.edit import CreateView
 from django.views import View
-from ..forms import ResumeForm, ExperienceForm, EducationForm, JobApplicantForm, ExperienceFormSet, EducationFormSet
 from django.views.generic.edit import UpdateView
 from django.urls import reverse
 
 
 # get all my owned job applicant profiles
 class MyApplicantProfilesListView(ListView, LoginRequiredMixin):
+    """ Renders a list of all Job Applicant Profiles."""
     model = JobApplicant
     template_name = 'my_resumes_list.html'
     context_object_name = 'job_applicant'
@@ -30,6 +29,7 @@ class MyApplicantProfilesListView(ListView, LoginRequiredMixin):
 # 3. add education to the job applicant profile, each in its own post form
 
 class JobApplicantCreateView(CreateView, LoginRequiredMixin):
+    """ Renders a form to create a new Job Applicant Profile."""
     model = JobApplicant
     fields = ['title', 'resume_file', 'skills']
     template_name = 'my_resumes_create3.html'
@@ -63,6 +63,7 @@ class JobApplicantCreateView(CreateView, LoginRequiredMixin):
         return super().form_valid(form)
     
 class JobApplicantUpdateView(UpdateView, LoginRequiredMixin):
+    """ Renders a form to update a Job Applicant Profile."""
     model = JobApplicant
     fields = ['title', 'resume_file', 'skills']
     template_name = 'my_resumes_create3.html'
@@ -89,7 +90,7 @@ class JobApplicantUpdateView(UpdateView, LoginRequiredMixin):
                     # add errors to the context array
                     context['errors'] = ['Resume file must be a pdf file']
                     return render(self.request, 'my_resumes_create3.html', context)
-            except:
+            except AttributeError:
                 # do nothing, because the user did not upload a new resume file
                 pass
             # save the form
@@ -100,6 +101,7 @@ class JobApplicantUpdateView(UpdateView, LoginRequiredMixin):
         return super().form_valid(form)
 
 class JobApplicantDeleteView(View, LoginRequiredMixin):
+    """ Renders a form to delete a Job Applicant Profile."""
     def post(self, request, pk):
         # find the job applicant
         job_applicant = JobApplicant.objects.get(pk=pk)

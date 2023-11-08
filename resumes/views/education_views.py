@@ -1,13 +1,8 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from ..models import Resume, JobApplicant, Experience, Education
-from django.views.generic.edit import CreateView, DeleteView
-from django.urls import reverse_lazy
+from resumes.models import JobApplicant, Education
 from django.views import View
-from ..forms import ResumeForm, ExperienceForm, EducationForm, JobApplicantForm, ExperienceFormSet, EducationFormSet
-from django.views.generic.edit import UpdateView
-from django.urls import reverse
+from resumes.forms import EducationForm
 
 
 
