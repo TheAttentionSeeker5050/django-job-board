@@ -14,7 +14,7 @@ urlpatterns = [
     path('create/<int:pk>/delete/', JobApplicantDeleteView.as_view(), name='my_resumes_delete'),
     
     # resume detail
-    path('detail/', ResumeDetailView.as_view(), name='my_resumes_detail'),
+    path('detail/<int:resume_pk>/', ResumeDetailView.as_view(), name='my_resumes_detail'),
 
     # add the routes for the experience views
     path('create/<int:resume_pk>/add-experience/', AddExperienceView.as_view(), name='my_resumes_add_experience'),
