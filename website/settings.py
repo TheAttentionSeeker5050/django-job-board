@@ -117,6 +117,7 @@ DATABASES = {
         "PORT": os.environ.get("POSTGRES_PORT") or "5434",
         "HOST": os.environ.get("POSTGRES_HOST"), # os.environ.get("POSTGRES_HOST"),
     }
+    
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
@@ -182,4 +183,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-# add shell scripts to run tailwindcss CLI commands
+#  tailwindcss configuration
+NPM_BIN_PATH = '/usr/local/bin/npm'
