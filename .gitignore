@@ -363,3 +363,6 @@ static/libs/tinymce/
 *.doc
 *.xls
 *.ppt
+
+
+postgres_data

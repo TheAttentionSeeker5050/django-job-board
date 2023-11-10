@@ -12,7 +12,7 @@ services:
     ports:
       - "5434:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - ./postgres_data:/var/lib/postgresql/data/
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
@@ -26,11 +26,15 @@ services:
       dockerfile: "django.Dockerfile"
     restart: always
     container_name: web
-    command: python3 manage.py runserver 0.0.0.0:8000
+    # command: python manage.py runserver 0.0.0.0:8000 && npm run start-tailwind
+    command: python manage.py runserver 0.0.0.0:8000 
     ports:
       - "8085:8000"
     volumes:
       - .:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+      # # make a volume for venv
+      # - project_virtualenv:/usr/src/app/venv
     env_file:
       - .env
     depends_on: 
@@ -40,5 +44,6 @@ services:
       - jobboard_django_network
 volumes:
   postgres_data:
+  node_modules:
 networks:
   jobboard_django_network:

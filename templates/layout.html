@@ -6,11 +6,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="{% static 'css/output.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'tailwind/styles.css' %}">
   <title>Panda Jobs -
-    {% block title %}
-    {% endblock title %}
-
+    {% block title %} {% endblock title %}
   </title>
   <script src="{% static 'libs/tinymce/tinymce.min.js' %}" ></script>
   <!-- <script src="{{ TINYMCE_JS_URL }}" ></script> -->
@@ -31,9 +29,6 @@
   
   <!-- make a block content -->
   {% block content %}
-
-  
-  
   {% endblock content %}
 </body>
 </html>

@@ -1,2 +1,6 @@
 .venv
 venv
+node_modules
+
+migrations
+!migrations/__init__.py
