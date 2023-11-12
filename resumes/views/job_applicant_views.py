@@ -32,7 +32,7 @@ class JobApplicantCreateView(CreateView, LoginRequiredMixin):
     """ Renders a form to create a new Job Applicant Profile."""
     model = JobApplicant
     fields = ['title', 'resume_file', 'skills']
-    template_name = 'my_resumes_create3.html'
+    template_name = 'my_resumes_create.html'
     
     
     def get_context_data(self, **kwargs):
@@ -52,7 +52,7 @@ class JobApplicantCreateView(CreateView, LoginRequiredMixin):
                 context['form'] = form
                 # add errors to the context array
                 context['errors'] = ['Resume file must be a pdf file']
-                return render(self.request, 'my_resumes_create3.html', context)
+                return render(self.request, 'my_resumes_create.html', context)
             
             
             # save the form
@@ -66,7 +66,7 @@ class JobApplicantUpdateView(UpdateView, LoginRequiredMixin):
     """ Renders a form to update a Job Applicant Profile."""
     model = JobApplicant
     fields = ['title', 'resume_file', 'skills']
-    template_name = 'my_resumes_create3.html'
+    template_name = 'my_resumes_create.html'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -89,7 +89,7 @@ class JobApplicantUpdateView(UpdateView, LoginRequiredMixin):
                     context['form'] = form
                     # add errors to the context array
                     context['errors'] = ['Resume file must be a pdf file']
-                    return render(self.request, 'my_resumes_create3.html', context)
+                    return render(self.request, 'my_resumes_create.html', context)
             except AttributeError:
                 # do nothing, because the user did not upload a new resume file
                 pass

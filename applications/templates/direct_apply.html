@@ -1,0 +1,52 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+<!-- load crispy forms -->
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+{% load crispy_forms_filters %}
+
+{% block title %}
+  Apply to Job
+{% endblock title %}
+
+
+
+{% block content %}
+
+  <main class="max-w-xl p-8 mx-auto my-6 ">
+    <h1 class="text-3xl font-bold text-center text-slate-600">Panda Jobs - Apply to Job</h1>
+    
+    
+    <form action="" method="POST" class="my-12 flex flex-col items-center gap-4 ">
+      {% csrf_token %}
+
+      <!-- add form invalid message -->
+      {% if form.errors %}
+        <p class="text-red-500 text-xs italic">Please fix the errors below.</p>
+        <!-- display errors -->
+        {% for error in errors %}
+            <div class="text-red-500 text-xs italic">
+              {{ error }}
+            </div>
+        {% endfor %}
+      {% endif %}
+      
+      
+      <input type="hidden" name="job" value="{{job.id}}">
+      <input type="hidden" name="company"  value="{{company.id}}">
+
+      <!-- now make a select of all the job application objects -->
+        <label for="jobApplication">Job Application</label>
+        <select name="job_applicant_profile" class="w-full border border-gray-300 rounded-xl px-4 py-2">
+          {% for profile in job_applicant_profiles %}
+            <option value="{{profile.id}}">{{profile}}</option>
+          {% endfor %}
+        </select>
+
+      <!-- submit -->
+      <button type="submit" class="py-2 my-4 px-8 rounded-xl bg-purple-500 text-white hover:bg-purple-400 grow">Submit Application</button>
+    </form>
+
+  </main>
+{% endblock content %}

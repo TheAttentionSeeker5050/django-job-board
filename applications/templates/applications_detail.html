@@ -1,0 +1,74 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block title %}
+  Applications List
+{% endblock title %}
+
+
+{% block content %}
+
+  <main class="max-w-xl p-8 mx-auto my-6 ">
+    <h1 class="mb-8 text-3xl font-bold text-center text-slate-600">Panda Jobs - Applications List</h1>
+    
+    <div class="my-4 flex gap-8 flex-col place-self-start">
+          <div class="flex flex-col gap-4">
+              <p><strong>Job Title: </strong>{{ application.job.title }}</p>
+          </div>
+
+          <!-- the applicant user data -->
+          <div class="flex flex-col gap-4">
+              <h2 class="text-2xl font-bold text-slate-600">Applicant Personal Information</h2>
+              <p><strong>First Name: </strong>{{ application.job_applicant_profile.user_owner.first_name }}</p>
+              <p><strong>Last Name: </strong>{{ application.job_applicant_profile.user_owner.last_name }}</p>
+              <p><strong>Email: </strong>{{ application.job_applicant_profile.user_owner.email }}</p>
+              <p><strong>Phone: </strong>{{ application.job_applicant_profile.user_owner.phone }}</p>
+          </div>
+
+          <!-- the applicant profile data -->
+          <div class="flex flex-col gap-4">
+            <h2 class="text-2xl font-bold text-slate-600">Applicant Personal Information</h2>
+            <p><strong>Resume: </strong>
+              <a href="{{ application.job_applicant_profile.resume_file.url}}" download class="text-blue-500 hover:text-blue-700">Download Resume</a>
+            </p>
+            <p><strong>Resume Title: </strong>{{ application.job_applicant_profile.title }}</p>
+        </div>
+
+        <div class="flex flex-col gap-4">
+          <h2 class="text-2xl font-bold text-slate-600">Skills</h2>
+          {% if application.job_applicant_profile.skills %}
+            {% for skill in application.job_applicant_profile.skills %}
+              <p>{{ skill }}</p>
+            {% endfor %}
+          {% else %}
+            <p>No skills added</p>
+          {% endif %}
+        </div>
+
+        <div class="flex flex-col gap-4">
+          <h2 class="text-2xl font-bold text-slate-600">Education</h2>
+          {% if application.job_applicant_profile.education %}
+            {% for education in application.job_applicant_profile.education.all %}
+              <p>{{ education }}</p>
+            {% endfor %}
+          {% else %}
+            <p>No education added</p>
+          {% endif %}
+        </div>
+
+        <div class="flex flex-col gap-4">
+          <h2 class="text-2xl font-bold text-slate-600">Experience</h2>
+          {% if application.job_applicant_profile.experience %}
+            {% for experience in application.job_applicant_profile.experience.all %}
+              <p>{{ experience }}</p>
+            {% endfor %}
+          {% else %}
+            <p>No experience added</p>
+          {% endif %}
+        </div>
+          
+  </div>
+    
+
+  </main>
+{% endblock content %}
