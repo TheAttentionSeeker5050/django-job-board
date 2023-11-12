@@ -22,7 +22,7 @@ class Experience(models.Model):
     company = models.CharField(max_length=100, verbose_name='Institution')
 
     def __str__(self):
-        return f"{self.title} at {self.company}"
+        return f"{self.title} at {self.company} during the term {self.term}"
     
 class Education(models.Model):
     term = models.CharField(max_length=50, verbose_name='Term')
@@ -31,7 +31,7 @@ class Education(models.Model):
 
 
     def __str__(self):
-        return f"{self.title} at {self.institution}"
+        return f"{self.title} at {self.institution} during the term {self.term}"
 
 class JobApplicant(models.Model):
     title = models.CharField(max_length=100, verbose_name='Title')

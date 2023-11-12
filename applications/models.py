@@ -12,4 +12,5 @@ class Application(models.Model):
     # return string
     def __str__(self):
         # should return first name, last name and job title
-        return f"{self.job_applicant_profile__user_owner__first_name} {self.job_applicant_profile__user_owner__last_name} - {self.job__title}"
+        return "something"
+        # return f"{self.job_applicant_profile__user_owner__first_name} {self.job_applicant_profile__user_owner__last_name} - {self.job__title}"

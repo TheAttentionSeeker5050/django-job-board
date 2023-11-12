@@ -1,8 +1,9 @@
 from typing import Any
+from django.db import models
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import CreateView, ListView, DetailView
+from django.views.generic import CreateView, ListView, DetailView, DeleteView
 from .models import Application
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -73,12 +74,27 @@ class ApplicationsListView(UserPassesTestMixin, ListView):
         return isOwnerOfObject(self, job.company.owner)
         
 
-    
-    
-    
-class ApplicationDetailView(LoginRequiredMixin, DetailView):
+class ApplicationDetailView(UserPassesTestMixin, DetailView):
     model = Application
     template_name = 'applications_detail.html'
+    slug_field = 'pk'
+    slug_url_kwarg = 'application_pk'
     context_object_name = 'application'
-    # if not logged in, redirect to login page
-    login_url = '/login/'
+    # if not logged in, redirect to main page
+    login_url = '/'
+
+    def get_queryset(self):
+        # get application
+        queryset = super().get_queryset()
+        # get the application with the kwargs
+        return queryset.filter(id=self.kwargs['application_pk'])
+    
+    def test_func(self):
+        # get the queryset application
+        application = self.get_queryset().first()
+
+        # get the company owner for this application
+        company_owner = application.company.owner
+
+        # use custom permission test function
+        return isOwnerOfObject(self, company_owner)
