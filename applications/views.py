@@ -2,19 +2,21 @@ from typing import Any
 from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, DetailView
 from .models import Application
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from jobs.models import Job
 from companies.models import Company
 from resumes.models import JobApplicant
+from django.shortcuts import redirect
+from website.permissions import isOwnerOfObject
 
 
 
 # Create your views here.
 # create class Views
-class DirectApplyCreateView(CreateView, LoginRequiredMixin):
+class DirectApplyCreateView(LoginRequiredMixin, CreateView):
     model = Application
     template_name = 'direct_apply.html'
     fields = ['job', 'job_applicant_profile', 'company']
@@ -49,15 +51,34 @@ class DirectApplyCreateView(CreateView, LoginRequiredMixin):
     def get_success_url(self):
         return reverse_lazy('job_detail', kwargs={'pk': self.kwargs['job_pk']})
     
-class ApplicationsListView(ListView, LoginRequiredMixin):
+class ApplicationsListView(UserPassesTestMixin, ListView):
     model = Application
     template_name = 'applications_list.html'
     context_object_name = 'job_applications'
+    # if not logged in, redirect to login page
+    login_url = '/login/'
+    
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         # return all the applications that belong to the job
         context = super().get_context_data(**kwargs)
+        # user must be the owner of the job, otherwise redirect to home
         context['job_applications'] = Application.objects.filter(job=self.kwargs['job_pk'])
         return context
     
+    def test_func(self):
+        # get the job
+        job = Job.objects.get(id=self.kwargs['job_pk'])
+        # we call our custom permission test function
+        return isOwnerOfObject(self, job.company.owner)
+        
+
     
+    
+    
+class ApplicationDetailView(LoginRequiredMixin, DetailView):
+    model = Application
+    template_name = 'applications_detail.html'
+    context_object_name = 'application'
+    # if not logged in, redirect to login page
+    login_url = '/login/'
