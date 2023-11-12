@@ -19,6 +19,7 @@ urlpatterns = [
     path('companies/', include('companies.urls')),
     path('jobs/', include('jobs.urls')),
     path('resumes/', include('resumes.urls')),
+    path('applications/', include('applications.urls')),
 
     # django browser reload
     path("__reload__/", include("django_browser_reload.urls")),

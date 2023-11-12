@@ -64,7 +64,7 @@ class JobApplicant(models.Model):
     )
 
     def __str__(self):
-        return f"{self.title} "
+        return f"{self.title} - {self.resume_file.name.split('/')[-1]}"
 
     class Meta:
         verbose_name = 'Job Applicant'
