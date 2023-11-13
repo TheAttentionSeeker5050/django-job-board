@@ -5,12 +5,14 @@ pipeline {
     stages {
         stage('Pre') {
             steps {
+                sh 'cd /var/jenkins_home/'
                 // stop the web service container
                 sh 'docker-compose down -v'
             }
         }
         stage('Test') {
             steps {
+                sh 'cd /var/jenkins_home/'
                 // activate the virtual environment
                 sh 'source venv/bin/activate'
                 // run the tests
@@ -25,17 +27,17 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+        // stage('Deploy') {
 
-            if (currentBuild.result == 'SUCCESS') {
-                steps {
-                    echo 'docker-compose up -d --build'
-                }
-            } else {
-                steps {
-                    echo 'Tests failed, not deploying'
-                }
-            }
-        }
+        //     if (currentBuild.result == 'SUCCESS') {
+        //         steps {
+        //             echo 'docker-compose up -d --build'
+        //         }
+        //     } else {
+        //         steps {
+        //             echo 'Tests failed, not deploying'
+        //         }
+        //     }
+        // }
     }
 }
