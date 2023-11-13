@@ -1,33 +1,39 @@
 # this workflow will start the docker-compose stack and run the tests on push to main
-name: Run tests locally
+name: CI/CD Local Pipeline
 on:
   push:
     branches: [ main ]
 jobs:
-  pre:
+  build_and_test:
     runs-on: ubuntu-latest
     steps:
-      # stop any running containers
+      # checkout handles automatically checking out the code to main
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.DEPLOY_TOKEN }} # needed to fetch the repo and listen to push events
+
+      # start container before testing
+      - name: Build and Start docker-compose stack
+        run: docker-compose up -d --build
+
+      # run tests
+      - name: Run tests
+        run: docker-compose exec -T web python3 manage.py test
+
+      # stop
       - name: Stop docker-compose stack
         run: docker-compose down -v
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      # # stop any running containers
-      # - name: Stop docker-compose stack
-      #   run: docker-compose down -v
-      - uses: actions/checkout@v2
-      - name: Start docker-compose stack
-        run: docker-compose up -d --build
-      - name: Run tests
-        run: sudo docker-compose exec -T web python3 manage.py test
-      - name: Stop docker-compose stack
-        run: docker-compose down
+
   deploy:
     runs-on: ubuntu-latest
+    needs: build_and_test
     steps:
-      - uses: actions/checkout@v2
-      # this is the deployment, as it is reverse proxying to the web container
-      - name: Start docker-compose stack
-        run: sudo docker-compose up -d --build
-  
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.DEPLOY_TOKEN }}
+
+      # start container, deploy and keep running
+      - name: Deploy
+        run: docker-compose up -d build
