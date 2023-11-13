@@ -1,0 +1,41 @@
+// create a jenkins test pipeline to run python3 manage.py test within the web service container 'web'
+// this is a test pipeline to test the jenkinsfile
+pipeline {
+    agent any
+    stages {
+        stage('Pre') {
+            steps {
+                // stop the web service container
+                sh 'docker-compose down -v'
+            }
+        }
+        stage('Test') {
+            steps {
+                // activate the virtual environment
+                sh 'source venv/bin/activate'
+                // run the tests
+                if (sh'python3 manage.py test') {
+                    echo 'Tests passed'
+                    // return result to help deploy stage
+                    currentBuild.result = 'SUCCESS'
+                } else {
+                    echo 'Tests failed'
+                    // return result to help deploy stage
+                    currentBuild.result = 'FAILURE'
+                }
+            }
+        }
+        stage('Deploy') {
+
+            if (currentBuild.result == 'SUCCESS') {
+                steps {
+                    echo 'docker-compose up -d --build'
+                }
+            } else {
+                steps {
+                    echo 'Tests failed, not deploying'
+                }
+            }
+        }
+    }
+}

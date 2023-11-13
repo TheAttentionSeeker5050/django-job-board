@@ -26,15 +26,12 @@ services:
       dockerfile: "django.Dockerfile"
     restart: always
     container_name: web
-    # command: python manage.py runserver 0.0.0.0:8000 && npm run start-tailwind
-    command: python manage.py runserver 0.0.0.0:8000 
+    command: python manage.py runserver 0.0.0.0:8000 # during development also start the npm tailwind watch
     ports:
       - "8085:8000"
     volumes:
       - .:/usr/src/app
       - node_modules:/usr/src/app/node_modules
-      # # make a volume for venv
-      # - project_virtualenv:/usr/src/app/venv
     env_file:
       - .env
     depends_on: 
@@ -42,6 +39,19 @@ services:
         condition: service_healthy
     networks:
       - jobboard_django_network
+  # jenkins:
+  #   image: jenkins/jenkins:lts
+  #   container_name: jenkins
+  #   privileged: true
+  #   user: root
+  #   ports:
+  #     - "8086:8080"
+  #     - "50000:50000"
+  #   volumes:
+  #     - ./jenkins_home:/var/jenkins_home
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   networks:
+  #     - jobboard_django_network
 volumes:
   postgres_data:
   node_modules:

@@ -1,0 +1,33 @@
+# this workflow will start the docker-compose stack and run the tests on push to main
+name: Run tests locally
+on:
+  push:
+    branches: [ main ]
+jobs:
+  pre:
+    runs-on: ubuntu-latest
+    steps:
+      # stop any running containers
+      - name: Stop docker-compose stack
+        run: docker-compose down -v
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      # # stop any running containers
+      # - name: Stop docker-compose stack
+      #   run: docker-compose down -v
+      - uses: actions/checkout@v2
+      - name: Start docker-compose stack
+        run: docker-compose up -d --build
+      - name: Run tests
+        run: sudo docker-compose exec -T web python3 manage.py test
+      - name: Stop docker-compose stack
+        run: docker-compose down
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # this is the deployment, as it is reverse proxying to the web container
+      - name: Start docker-compose stack
+        run: sudo docker-compose up -d --build
+  

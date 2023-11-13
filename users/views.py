@@ -15,13 +15,16 @@ class UserLoginView(LoginView):
     success_url = reverse_lazy('home')
     form_class = UserLoginForm
 
+
 class UserLogoutView(LogoutView):
     next_page = reverse_lazy('login')
 
 class UserRegisterView(CreateView):
     form_class = RegisterForm
     template_name = 'register.html'
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('login') 
+    
+
 
 # create a profile view
 class ProfileView(DetailView):
