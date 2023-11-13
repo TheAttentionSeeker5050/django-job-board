@@ -13,9 +13,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      # # stop any running containers
-      # - name: Stop docker-compose stack
-      #   run: docker-compose down -v
       - uses: actions/checkout@v2
       - name: Start docker-compose stack
         run: docker-compose up -d --build
