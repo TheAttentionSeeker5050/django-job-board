@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins:lts
+    ports:
+      - "8080:8080"
+    volumes:
+      - jenkins_data:/var/jenkins_home
+      - ./../:/var/test_project # Allows Jenkins to be visible on the host's filesystem
+      - /var/run/docker.sock:/var/run/docker.sock  # Allows Jenkins to use the host's Docker daemon
+      
+      # our local files
+      # the jenkinsfile 
+      - ./Jenkinsfile:/var/jenkins_home/Jenkinsfile
+      # the plugins.txt file
+      - ./plugins.txt:/usr/share/jenkins/ref/plugins.txt
+      # the groovy scripts
+      # - ./../init.groovy.d/:/usr/share/jenkins/ref/init.groovy.d/
+    environment:
+      # to not show the setup wizard
+      - JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
+      - JENKINS_USER=admin
+      - JENKINS_PASS=admin
+      - JENKINS_ADMIN_USER=admin
+      - JENKINS_ADMIN_PASS=admin
+    restart: always
+    
+
+volumes:
+  jenkins_data:

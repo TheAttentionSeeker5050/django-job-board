@@ -5,14 +5,19 @@ pipeline {
     stages {
         stage('Pre') {
             steps {
-                sh 'cd /var/jenkins_home/'
+                sh 'cd /var/test_project'
                 // stop the web service container
                 sh 'docker-compose down -v'
+
+                // run the container in the background
+                sh 'docker-compose up -d --build'
             }
         }
         stage('Test') {
+            dependsOn 'Pre'
+            
             steps {
-                sh 'cd /var/jenkins_home/'
+                sh 'cd /var/test_project'
                 // activate the virtual environment
                 sh 'source venv/bin/activate'
                 // run the tests
@@ -25,19 +30,11 @@ pipeline {
                     // return result to help deploy stage
                     currentBuild.result = 'FAILURE'
                 }
+
+                // stop the web service container
+                sh 'docker-compose down -v'
             }
         }
-        // stage('Deploy') {
-
-        //     if (currentBuild.result == 'SUCCESS') {
-        //         steps {
-        //             echo 'docker-compose up -d --build'
-        //         }
-        //     } else {
-        //         steps {
-        //             echo 'Tests failed, not deploying'
-        //         }
-        //     }
-        // }
+        
     }
 }
