@@ -1,0 +1,23 @@
+// create a jenkins test pipeline to run python3 manage.py test within the web service container 'web'
+// this is a test pipeline to test the jenkinsfile
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+               
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+    }
+}
