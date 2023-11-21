@@ -1,0 +1,52 @@
+version: '3'
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    container_name: database
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=jobboard_django_db
+      - PGUSER=postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - jobboard_django_network
+  web:
+    build:
+      context: "./"
+      dockerfile: "django.Dockerfile"
+    restart: always
+    container_name: web
+    # use gunicorn to serve the django app on port 5000
+    command: gunicorn jobboard.wsgi:application --bind --port 5000
+    # command: python manage.py runserver 0.0.0.0:8000 # during development also start the npm tailwind watch
+    ports:
+      - "5001:5000"
+    volumes:
+      # - .:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+      # static files
+      - static:/usr/src/app/static
+    env_file:
+      - .env
+    depends_on: 
+      db:
+        condition: service_healthy
+    networks:
+      - jobboard_django_network
+  
+volumes:
+  postgres_data:
+  node_modules:
+  static:
+networks:
+  jobboard_django_network:
