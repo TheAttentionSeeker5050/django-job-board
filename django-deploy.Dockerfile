@@ -9,10 +9,10 @@ COPY . ./
 COPY ./*.json ./
 
 # add psycopg2 dependencies
+# musl-dev
 RUN apk update \
     && apk add postgresql-dev gcc python3-dev musl-dev \
-    netcat-openbsd gcc && \
-    apk clean
+    netcat-openbsd gcc 
 
 # install django from requirements.txt file
 RUN pip3 install -r requirements.txt
@@ -29,4 +29,6 @@ RUN apk add --update nodejs npm
 RUN npm install
 
 # expose port 8000
-EXPOSE 8085
+EXPOSE 5000
+
+CMD ["gunicorn","--bind", ":5000", "--workers", "3", "website.wsgi:application"]
