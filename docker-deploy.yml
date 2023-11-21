@@ -23,12 +23,11 @@ services:
   web:
     build:
       context: "./"
-      dockerfile: "django.Dockerfile"
+      dockerfile: "django-deploy.Dockerfile"
     restart: always
     container_name: web
-    # use gunicorn to serve the django app on port 5000
-    command: gunicorn jobboard.wsgi:application --bind --port 5000
-    # command: python manage.py runserver 0.0.0.0:8000 # during development also start the npm tailwind watch
+    # use gunicorn to serve the django app on port 5000 production
+    # command: python manage.py runserver --port 5000 env=production
     ports:
       - "5001:5000"
     volumes:
