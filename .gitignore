@@ -336,6 +336,7 @@ tags
 pyvenv.cfg
 pip-selfcheck.json
 .env
+*.env
 zappa_settings.json
 
 
