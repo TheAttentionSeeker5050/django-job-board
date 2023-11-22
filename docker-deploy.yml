@@ -31,12 +31,12 @@ services:
     ports:
       - "5001:5000"
     volumes:
-      # - .:/usr/src/app
+      - .:/usr/src/app
       - node_modules:/usr/src/app/node_modules
-      # static files
-      - static:/usr/src/app/static
+      # # static files
+      # - static:/usr/src/app/static
     env_file:
-      - .env
+      - deploy.env
     depends_on: 
       db:
         condition: service_healthy

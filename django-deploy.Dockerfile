@@ -8,14 +8,13 @@ WORKDIR /usr/src/app
 COPY . ./
 COPY ./*.json ./
 
-# add psycopg2 dependencies
-# musl-dev
+# add psycopg2 dependencies and remove cache
 RUN apk update \
-    && apk add postgresql-dev gcc python3-dev musl-dev \
-    netcat-openbsd gcc 
+    && apk add postgresql-dev gcc python3-dev musl-dev -- \
+    && rm -rf /var/cache/apk/*  
 
 # install django from requirements.txt file
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r requirements.txt --no-cache-dir
 
 # RUN python3 manage.py collectstatic --noinput
 # RUN python3 manage.py makemigrations
@@ -23,12 +22,17 @@ RUN pip3 install -r requirements.txt
 
 
 # install node and npm
-RUN apk add --update nodejs npm
+RUN apk add --update nodejs npm -- \
+    && rm -rf /var/cache/apk/*
+
 
 # install dependencies
 RUN npm install
 
+# build tailwind
+RUN npm run build-tailwind
+
 # expose port 8000
 EXPOSE 5000
 
-CMD ["gunicorn","--bind", ":5000", "--workers", "3", "website.wsgi:application"]
+CMD ["gunicorn","--bind", ":5000", "website.wsgi:application"]
