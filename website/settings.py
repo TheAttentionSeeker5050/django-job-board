@@ -28,9 +28,8 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = os.environ.get("DEBUG") == "True"
+ALLOWED_HOSTS = ['localhost', 'panda-jobs.nicolas-castellano.com']
 
 
 # Application definition
