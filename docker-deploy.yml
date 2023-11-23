@@ -34,7 +34,7 @@ services:
       - .:/usr/src/app
       - node_modules:/usr/src/app/node_modules
       # # static files
-      # - static:/usr/src/app/static
+      - static:/usr/src/app/static
     env_file:
       - deploy.env
     depends_on: 
@@ -42,10 +42,31 @@ services:
         condition: service_healthy
     networks:
       - jobboard_django_network
-  
+      - jobboard_nginx_network
+
+    
+  nginx:
+    container_name: nginx
+    depends_on:
+      - web
+    build:
+      context: "./nginx"
+      dockerfile: nginx.Dockerfile
+    ports:
+      - "82:80"
+    volumes:
+      - static:/usr/src/app/static
+    networks:
+      - jobboard_nginx_network
+
 volumes:
   postgres_data:
   node_modules:
   static:
+  
 networks:
   jobboard_django_network:
+    driver: bridge
+
+  jobboard_nginx_network:
+    driver: bridge
