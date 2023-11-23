@@ -338,6 +338,7 @@ pip-selfcheck.json
 .env
 *.env
 zappa_settings.json
+postgres_data_OLD
 
 
 ### Project template
@@ -367,3 +368,4 @@ static/libs/tinymce/
 
 
 postgres_data
+static

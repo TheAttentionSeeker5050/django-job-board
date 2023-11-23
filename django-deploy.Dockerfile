@@ -1,6 +1,10 @@
 # get base image alpine
 FROM python:3.11-alpine
 
+# Set environment variables
+ENV PYTHONUNBUFFERED 1
+ENV DJANGO_SETTINGS_MODULE website.settings
+
 # base dir is this dir
 WORKDIR /usr/src/app
 
