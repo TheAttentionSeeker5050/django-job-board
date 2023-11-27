@@ -9,10 +9,6 @@ services:
       - deploy.env
     environment:
       - "POSTGRES_HOST_AUTH_METHOD=trust"
-    #   - POSTGRES_USER=postgres
-    #   - POSTGRES_PASSWORD=postgres
-    #   - POSTGRES_DB=jobboard_django_db
-    #   - PGUSER=postgres
     ports:
       - "5434:5432"
     volumes:
@@ -47,15 +43,7 @@ services:
     networks:
       - jobboard_django_network
       - jobboard_nginx_network
-  adminer:
-    image: adminer
-    container_name: chat-app-adminer
-    ports:
-      - "8099:8080"
-    networks:
-      - jobboard_django_network
-
-    
+  
   nginx:
     container_name: nginx
     depends_on:

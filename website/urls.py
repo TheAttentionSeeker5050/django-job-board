@@ -14,7 +14,7 @@ urlpatterns = [
     path('register/', UserRegisterView.as_view(), name='register'),
     path('logout/', UserLogoutView.as_view(), name='logout'),
     # dummy login
-    path('dummy-login/', UserLoginView.as_view(), name='dummy-login'),
+    path('dummy-login/', DummyLoginView.as_view(), name='dummy-login'),
 
     # app routes
     path('profile/', include('users.urls')),
