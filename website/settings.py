@@ -29,8 +29,9 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG") == "True"
-ALLOWED_HOSTS = ['localhost', 'panda-jobs.nicolas-castellano.com', '64.225.57.224']
-
+ALLOWED_HOSTS = ['panda-jobs.nicolas-castellano.com', '64.225.57.224']
+CSRF_TRUSTED_ORIGINS = ['http://localhost', 'https://panda-jobs.nicolas-castellano.com', 'http://64.225.57.224']
+CSRF_COOKIE_SECURE = bool(os.environ.get("DEBUG")) == False
 
 # Application definition
 

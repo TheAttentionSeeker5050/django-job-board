@@ -37,13 +37,25 @@
       <input type="hidden" name="company"  value="{{company.id}}">
 
       <!-- now make a select of all the job application objects -->
-        <label for="jobApplication">Job Application</label>
-        <select name="job_applicant_profile" class="w-full border border-gray-300 rounded-xl px-4 py-2">
-          {% for profile in job_applicant_profiles %}
-            <option value="{{profile.id}}">{{profile}}</option>
-          {% endfor %}
-        </select>
+        
 
+        <!-- if no job application, add button to redirect to create resume -->
+        {% if job_applicant_profiles.count > 0 %}
+          <label for="jobApplication">Job Application</label>
+          <select name="job_applicant_profile" class="w-full border border-gray-300 rounded-xl px-4 py-2">
+            {% for profile in job_applicant_profiles %}
+              <option value="{{profile.id}}">{{profile}}</option>
+            {% endfor %}
+          </select>
+        {% endif %}
+        
+        <!-- if logged in. display create job applicant link, otherwise add login link -->
+        {% if user.is_authenticated %}
+          <a href="{% url 'my_resumes_create' %}" class="text-purple-500 hover:text-purple-400">Create Job Applicant Profile</a>
+        {% else %}
+          <a href="{% url 'login' %}" class="text-purple-500 hover:text-purple-400">Login to Create Job Applicant Profile</a>
+        {% endif %}
+        
       <!-- submit -->
       <button type="submit" class="py-2 my-4 px-8 rounded-xl bg-purple-500 text-white hover:bg-purple-400 grow">Submit Application</button>
     </form>
