@@ -9,9 +9,17 @@
 <main class="my-6 ">
     <div class="max-w-md p-8 mx-auto border-2 border-slate-800 rounded-lg ">
     <h1 class="text-3xl font-bold text-center text-slate-600">Login</h1>
+
+    {% if error_message %}
+      <!-- error message as a highlighted message, simmilar to bootstrap alert -->
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">Error!</strong>
+        <span class="block sm:inline">{{ error_message }}</span>
+      </div>  
+    {% endif %}
     
     <!-- use the RegisterForm to log in the user -->
-    <form action="" method="POST" class="my-4 flex flex-col flex-wrap gap-2 ">
+    <form  action="{% url 'login' %}" method="POST" class="my-4 flex flex-col flex-wrap gap-2 ">
         
         {% csrf_token %}
         
@@ -25,8 +33,13 @@
 
         
         <button type="submit" class="py-2 px-4 m-2 rounded-xl bg-purple-500 text-white hover:bg-purple-400">Login</button>
+
     </form>
-    </div>
+
+    <a href="{% url 'dummy-login' %}" class="py-2 px-4 m-2 rounded-xl bg-purple-500 text-white hover:bg-purple-400">Dummy Login</a>
+
+    
+
 </main>
 {% endblock content %}
   

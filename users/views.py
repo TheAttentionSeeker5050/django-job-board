@@ -6,6 +6,10 @@ from .forms import RegisterForm, UserLoginForm
 from django.views.generic import DetailView
 from django.contrib.auth import get_user_model
 from django.shortcuts import redirect
+from django.views import View
+from django.shortcuts import render
+from django.contrib.auth import authenticate, login
+import os
 
 # Create your views here.
 # create the login view using classes and forms
@@ -28,6 +32,24 @@ class UserLoginView(LoginView):
         context['form'] = form
         context['error_message'] = 'Invalid form'
         return self.render_to_response(context)
+
+# add a dummy login view. We will authenticate with username: dummyUser and password: dummyPassword123**. It is only to accept POST requests and redirect to home page if the credentials are correct. If not, it will redirect to the same page with an error message.
+# the credentials stored in env variables and we follow the login flow but with hardcoded credentials
+class DummyLoginView(View):
+    # authenticate the user inside the get method
+    def get(self, request):
+        username = os.environ.get('DUMMY_USER')
+        password = os.environ.get('DUMMY_PASSWORD')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('home')
+        else:
+            context = {}
+            context['error_message'] = 'Invalid credentials'
+            return render(request, 'login.html', context=context)
+
+
 
 
 class UserLogoutView(LogoutView):
