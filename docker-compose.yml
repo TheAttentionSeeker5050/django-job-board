@@ -39,6 +39,14 @@ services:
         condition: service_healthy
     networks:
       - jobboard_django_network
+  adminer:
+    image: adminer
+    container_name: chat-app-adminer
+    ports:
+      - "8099:8080"
+    networks:
+      - chat_app_network
+
   # jenkins:
   #   image: jenkins/jenkins:lts
   #   container_name: jenkins

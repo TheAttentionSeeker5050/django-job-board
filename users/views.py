@@ -23,6 +23,12 @@ class UserRegisterView(CreateView):
     form_class = RegisterForm
     template_name = 'register.html'
     success_url = reverse_lazy('login') 
+
+    # if fails redirect to same page but add error to context
+    def form_invalid(self, form):
+        # add error to context
+        return self.render_to_response(self.get_context_data(form=form, error=form.errors))
+
     
 
 
