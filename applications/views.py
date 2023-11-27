@@ -22,6 +22,7 @@ class DirectApplyCreateView(LoginRequiredMixin, CreateView):
     template_name = 'direct_apply.html'
     fields = ['job', 'job_applicant_profile', 'company']
     context_object_name = 'application'
+    login_url = "/login/"
 
     # now get the context data with method
     def get_context_data(self, **kwargs):

@@ -2,6 +2,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import get_user_model
+from users.models import CustomUser
 
 # the form
 class UserLoginForm(AuthenticationForm):
@@ -27,7 +28,7 @@ class UserLoginForm(AuthenticationForm):
             self.fields[field].widget.attrs['class'] = 'border-2 border-slate-800  rounded-lg outline-0 focus:border-purple-700 bg-purple-50 py-1 px-2'
             
     class Meta:
-        model = get_user_model()
+        model = CustomUser
         fields = ['username', 'password']
 
 # create account form using class based form
@@ -57,5 +58,5 @@ class RegisterForm(UserCreationForm):
             self.fields[field].widget.attrs['class'] = 'form-control border-2 border-slate-800 px-2 rounded-lg outline-0 focus:border-purple-700 bg-purple-50 py-1'
 
     class Meta:
-        model = get_user_model()
+        model = CustomUser
         fields = ['username', 'email', 'password1', 'password2']

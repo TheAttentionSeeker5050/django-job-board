@@ -10,32 +10,35 @@
     <div class="max-w-md p-8 mx-auto border-2 border-slate-800 rounded-lg ">
       <h1 class="text-3xl font-bold text-center text-slate-600">Register</h1>
 
-      <!-- display errors -->
-      {% if form.errors %}
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-          <strong class="font-bold">Oops!</strong>
-          <span class="block sm:inline">Something went wrong.</span>
-          <ul>
-            {% for field in form %}
-              {% for error in field.errors %}
-                <li><strong>{{ field.label }}:</strong> {{ error }}</li>
-              {% endfor %}
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
-      
       <!-- use the RegisterForm to log in the user -->
       <form action="" method="POST" class="my-4 flex flex-col flex-wrap gap-4">
         {% csrf_token %}
         <label for="{{ form.username.id_for_label }}" class="w-1/2 ">Username:</label>
         {{ form.username }}
+        <!-- add validation error -->
+        {% if form.username.errors %}
+          <span class="block sm:inline text-red-500">{{ form.username.errors }}</span>
+        {% endif %}
+
         <label for="{{ form.email.id_for_label }}" class="w-1/2">Email:</label>
         {{ form.email }}
+        {% if form.email.errors %}
+          <span class="block sm:inline text-red-500">{{ form.email.errors }}</span>
+        {% endif %}
+
         <label for="{{ form.password1.id_for_label }}" class="w-1/2">Password:</label>
         {{ form.password1 }}
+        <!-- add validation to password 1 -->
+        {% if form.password1.errors %}
+          <span class="block sm:inline text-red-500">{{ form.password1.errors }}</span>
+        {% endif %}
+
         <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
         {{ form.password2 }}
+        <!-- add validation to password, but with red text span only -->
+        {% if form.password2.errors %}
+          <span class="block sm:inline text-red-500">{{ form.password2.errors }}</span>
+        {% endif %}
         
         <button type="submit" class="py-2 px-4 m-2 rounded-xl bg-purple-500 text-white hover:bg-purple-400">Register</button>
       </form>
