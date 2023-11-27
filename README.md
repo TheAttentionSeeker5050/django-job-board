@@ -1,50 +1,63 @@
-# Django Tailwind Boilerplate
-A repo with the necessary boilerplate to run Django with TailwindCSS without Node.
-You can find a detailed description to set this up by yourself on [this blog post](https://ericluna.dev/blog/configuring-the-ultimate-django-tailwind-experience-without-node).
+# **Panda Jobs Job Board Website**
 
+## **Description**
 
-## Instalation
-### - Download the Standalone CLI:
-Grab the executable for your platform from the [latest release](https://github.com/tailwindlabs/tailwindcss/releases/tag/v3.0.23) on GitHub, making sure to give it executable permissions.
+Panda Jobs is a comprehensive job board platform developed using Django, Django Templates, jQuery, and MySQL. It bridges job seekers and employers with features like job postings, applications, resume uploads, and user-friendly dashboards.
 
-``` bash
-# Example for macOS arm64
-curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/latest/download/tailwindcss-macos-arm64
-chmod +x tailwindcss-macos-arm64
-mv tailwindcss-macos-arm64 tailwindcss
-```
+## **Prerequisites**
 
-### - Run the watcher
-``` bash
-./tailwindcss -i static/css/input.css -o static/css/output.css --watch
-```
+- Docker and Docker Compose
+- Node.js (for Tailwind CSS)
 
-### - Run Django's server
-``` bash
-# Create a virtualenv
-pip install virtualenv
-virtualenv .env --python /path/to/python3
+## **Setting Up the Project**
 
-# Enable environment
-source .env/bin/activate
+1. **Clone the Repository**
+    
+    Clone this repository to get started.
+    
+2. **Environment Variables**
+    
+    Copy the contents from **`templateEnv`** into **`.env`** or **`deploy.env`** depending on your environment. Adjust these files as needed for your specific configuration.
+    
+3. **Building Tailwind CSS Styles**
+    
+    Run **`npm run build-tailwind`** to compile the Tailwind CSS styles.
+    
+4. **Creating Users**
+    - **Superuser**: Use **`DJANGO_SUPERUSER_USERNAME`**, **`DJANGO_SUPERUSER_EMAIL`**, and **`DJANGO_SUPERUSER_PASSWORD`** in the environment file to create a Django superuser.
+    - **Dummy User**: Create a dummy user for demos. Set **`DUMMY_USER`** and **`DUMMY_PASSWORD`** in the environment file for the dummy login functionality. This user can be created via the Django admin console.
+5. **Docker Compose**
+    - **Development**: Run **`docker-compose -f docker-compose.yml up`** to start the development environment.
+    - **Production**: Use **`docker-compose -f docker-deploy.yml up`** for production. Make necessary changes for Docker network configurations, domain settings, etc.
+6. **Reverse Proxy Using Nginx**
+    
+    In production, Nginx serves as a reverse proxy. Configure this in **`nginx.Dockerfile`** and the Nginx configuration files.
+    
 
-# Instal dependencies
-pip install -r requirements.txt
+## **Customizing for Production**
 
-# Run server
-python manage.py runserver
-```
+- Customize **`CSRF_TRUSTED_ORIGINS`** and **`ALLOWED_HOSTS`** in the environment files to match your domain when deploying.
+- Modify Docker network settings and domain configurations in the Docker Compose files to fit your environment.
+- Review and adjust the volume mappings and port settings in the Docker Compose files as needed.
 
-## Usage
-Just add Tailwind's utility classes to your HTML class attribute.
-``` html
-<div class="text-3xl text-blue-700 p-8 bg-[#FFCCAA]">Hello World!</div>
-```
+## **Running the Application**
 
-Changes will update instantly thanks to [django_browser_reload](https://github.com/adamchainz/django-browser-reload).
+- **Development**: Visit **`localhost:8085`**.
+- **Production**: Access the production server at **`localhost:82`**.
 
-## Production
-When you're ready to deploy your site to production, run the following command for a more optimized css file:
-``` bash
-./tailwindcss -i static/css/input.css -o static/css/output.css --minify
-```
+## **Additional Setup Details**
+
+- The database service uses PostgreSQL on port 5434. Adjust **`POSTGRES_PORT`** as needed.
+- Ensure **`DEBUG`** is **`False`** in production for security.
+- Keep the **`SECRET_KEY`** secret and secure.
+- Jenkins setup is optional for CI/CD.
+
+## **Troubleshooting**
+
+- Ensure all environment variables are set correctly.
+- Verify Docker and Docker Compose installation.
+- Check Docker Compose logs for startup errors.
+
+## **Conclusion**
+
+With these instructions, you can set up Panda Jobs for development and production. Be sure to customize the Docker configuration
