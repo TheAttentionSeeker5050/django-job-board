@@ -1,25 +1,25 @@
 version: '3'
 services:
-  db:
-    image: postgres:latest
-    restart: always
-    container_name: database
-    # use the same env variables as in the django app
-    env_file:
-      - deploy.env
-    environment:
-      - "POSTGRES_HOST_AUTH_METHOD=trust"
-    ports:
-      - "5434:5432"
-    volumes:
-      - ./postgres_data:/var/lib/postgresql/data/
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    networks:
-      - jobboard_django_network
+  # db:
+  #   image: postgres:latest
+  #   restart: always
+  #   container_name: database
+  #   # use the same env variables as in the django app
+  #   env_file:
+  #     - deploy.env
+  #   environment:
+  #     - "POSTGRES_HOST_AUTH_METHOD=trust"
+  #   ports:
+  #     - "5434:5432"
+  #   volumes:
+  #     - ./postgres_data:/var/lib/postgresql/data/
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
+  #     interval: 5s
+  #     timeout: 5s
+  #     retries: 5
+  #   networks:
+  #     - jobboard_django_network
   web:
     build:
       context: "./"
@@ -37,9 +37,9 @@ services:
       - static:/usr/src/app/static
     env_file:
       - deploy.env
-    depends_on: 
-      db:
-        condition: service_healthy
+    # depends_on: 
+    #   db:
+    #     condition: service_healthy
     networks:
       - jobboard_django_network
       - jobboard_nginx_network
@@ -59,7 +59,7 @@ services:
       - jobboard_nginx_network
 
 volumes:
-  postgres_data:
+  # postgres_data:
   node_modules:
   static:
   

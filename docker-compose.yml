@@ -1,25 +1,25 @@
 version: '3'
 services:
-  db:
-    image: postgres:latest
-    restart: always
-    container_name: database
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=jobboard_django_db
-      - PGUSER=postgres
-    ports:
-      - "5434:5432"
-    volumes:
-      - ./postgres_data:/var/lib/postgresql/data/
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    networks:
-      - jobboard_django_network
+  # db:
+  #   image: postgres:latest
+  #   restart: always
+  #   container_name: database
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #     - POSTGRES_DB=jobboard_django_db
+  #     - PGUSER=postgres
+  #   ports:
+  #     - "5434:5432"
+  #   volumes:
+  #     - ./postgres_data:/var/lib/postgresql/data/
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
+  #     interval: 5s
+  #     timeout: 5s
+  #     retries: 5
+  #   networks:
+  #     - jobboard_django_network
   web:
     build:
       context: "./"
@@ -33,19 +33,19 @@ services:
       - .:/usr/src/app
       - node_modules:/usr/src/app/node_modules
     env_file:
-      - .env
-    depends_on: 
-      db:
-        condition: service_healthy
+      - deploy.env
+    # depends_on: 
+    #   db:
+    #     condition: service_healthy
     networks:
       - jobboard_django_network
-  adminer:
-    image: adminer
-    container_name: chat-app-adminer
-    ports:
-      - "8099:8080"
-    networks:
-      - chat_app_network
+  # adminer:
+  #   image: adminer
+  #   container_name: chat-app-adminer
+  #   ports:
+  #     - "8099:8080"
+  #   networks:
+  #     - jobboard_django_network
 
   # jenkins:
   #   image: jenkins/jenkins:lts
