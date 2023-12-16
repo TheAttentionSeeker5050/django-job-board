@@ -2,7 +2,7 @@
 
 ## **Description**
 
-Panda Jobs is a comprehensive job board platform developed using Django, Django Templates, jQuery, and MySQL. It bridges job seekers and employers with features like job postings, applications, resume uploads, and user-friendly dashboards.
+Panda Jobs is a comprehensive job board platform developed using Django, Django Templates, jQuery, and MySQL. It bridges job seekers and employers with features like job postings, applications, resume uploads, and user-friendly dashboards. Visit live demo of the site at: https://panda-jobs.nicolas-castellano.com 
 
 ## **Prerequisites**
 
