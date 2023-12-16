@@ -4,3 +4,4 @@ node_modules
 
 migrations
 !migrations/__init__.py
+postgres_data
